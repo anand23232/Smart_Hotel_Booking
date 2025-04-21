@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Summary</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .summary {
+            margin: 20px 0;
+        }
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+        .summary-item span {
+            font-weight: bold;
+        }
+        .total {
+            text-align: right;
+            font-size: 1.2em;
+            margin-top: 20px;
+            color: #333;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-size: 1em;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Booking Summary</h1>
+        <div class="summary">
+            <div class="summary-item">
+                <span>Hotel Name:</span>
+                <span>Grand Palace Hotel</span>
+            </div>
+            <div class="summary-item">
+                <span>Check-in Date:</span>
+                <span>2023-10-15</span>
+            </div>
+            <div class="summary-item">
+                <span>Check-out Date:</span>
+                <span>2023-10-20</span>
+            </div>
+            <div class="summary-item">
+                <span>Guests:</span>
+                <span>2 Adults, 1 Child</span>
+            </div>
+            <div class="summary-item">
+                <span>Total Price:</span>
+                <span>$750</span>
+            </div>
+        </div>
+        <div class="total">
+            <strong>Total Amount: $750</strong>
+        </div>
+        <a href="/confirm-booking" class="btn">Confirm Booking</a>
+    </div>
+</body>
+</html>

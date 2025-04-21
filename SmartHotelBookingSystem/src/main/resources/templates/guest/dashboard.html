@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guest Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem 2rem;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-header h1 {
+            margin: 0;
+            color: #333;
+        }
+
+        .card {
+            display: inline-block;
+            width: 30%;
+            margin: 1%;
+            padding: 1rem;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            margin: 0.5rem 0;
+            color: #555;
+        }
+
+        .card p {
+            color: #777;
+        }
+
+        .card a {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .card a:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #4CAF50;
+            color: white;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Smart Hotel Booking System</h1>
+    </header>
+    <div class="container">
+        <div class="dashboard-header">
+            <h1>Guest Dashboard</h1>
+        </div>
+        <div class="card">
+            <h3>View Bookings</h3>
+            <p>Check your current and past bookings.</p>
+            <a href="/guest/bookings">View</a>
+        </div>
+        <div class="card">
+            <h3>Make a Reservation</h3>
+            <p>Book a room for your next stay.</p>
+            <a href="/guest/reservation">Book Now</a>
+        </div>
+        <div class="card">
+            <h3>Profile Settings</h3>
+            <p>Update your personal information.</p>
+            <a href="/guest/profile">Edit Profile</a>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2023 Smart Hotel Booking System. All rights reserved.</p>
+    </footer>
+</body>
+</html>

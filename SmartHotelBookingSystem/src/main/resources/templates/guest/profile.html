@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guest Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        .profile-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .profile-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .profile-header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: #333;
+        }
+        .profile-details {
+            line-height: 1.8;
+        }
+        .profile-details label {
+            font-weight: bold;
+            color: #555;
+        }
+        .profile-details p {
+            margin: 5px 0 15px;
+            color: #333;
+        }
+        .btn-edit {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .btn-edit:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <h1>Guest Profile</h1>
+        </div>
+        <div class="profile-details">
+            <label>Full Name:</label>
+            <p>{{ guest.fullName }}</p>
+            <label>Email:</label>
+            <p>{{ guest.email }}</p>
+            <label>Phone Number:</label>
+            <p>{{ guest.phoneNumber }}</p>
+            <label>Address:</label>
+            <p>{{ guest.address }}</p>
+            <label>Membership Status:</label>
+            <p>{{ guest.membershipStatus }}</p>
+        </div>
+        <a href="/guest/edit-profile" class="btn-edit">Edit Profile</a>
+    </div>
+</body>
+</html></div>

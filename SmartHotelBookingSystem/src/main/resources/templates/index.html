@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Hotel Booking</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<<<<<<< HEAD
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+=======
+>>>>>>> e385994a205eb7d0d60297549c4a87b41a394be2
+    <style>
+        /* General Reset */
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+<<<<<<< HEAD
+            background-color: #ebedf1;
+            color: rgba(255, 255, 255, 0.9)
+=======
+            background-color: #5b6893;
+            color: white;
+>>>>>>> e385994a205eb7d0d60297549c4a87b41a394be2
+            padding: 15px 30px;
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-family: 'Merriweather', serif;
+            font-weight: 700;
+        }
+
+        .navbar .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar .nav-links li {
+            display: inline;
+        }
+
+        .navbar .nav-links a {
+            font-weight: 600;
+            padding: 8px 15px;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .navbar .nav-links a:hover {
+            background-color: #b5c6d6;
+        }
+
+        /* Hero Section with Slideshow */
+        .hero {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            color: white;
+            text-align: center;
+        }
+
+        .slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            animation: slideShow 20s infinite;
+        }
+
+        .slider img {
+            width: 100%;
+            height: 100%;
+            flex-shrink: 0;
+            object-fit: cover;
+        }
+
+        /* Sliding Animation */
+        @keyframes slideShow {
+            0% {
+                transform: translateX(0%);
+            }
+
+            25% {
+                transform: translateX(-100%);
+            }
+
+            50% {
+                transform: translateX(-200%);
+            }
+
+            75% {
+                transform: translateX(-300%);
+            }
+
+            100% {
+                transform: translateX(0%);
+            }
+        }
+
+        .hero-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-family: 'Merriweather', serif;
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            background-color: #506d8f;
+            color: white;
+            padding: 12px 25px;
+            font-size: 18px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-primary:hover {
+            background-color: #405572;
+        }
+
+        /* Search Section */
+<<<<<<< HEAD
+       
+   
+    
+    /* Search Section */
+    .search-section {
+        position: absolute;
+        top: 400px; /* Adjust this value to control the vertical position */
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
+        padding: 20px 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 2; /* Ensure it floats above the slider */
+        width: 70%; /* Adjust width as needed */
+        max-width: 800px;
+    }
+
+    .search-section form {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .search-section input {
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        flex: 1;
+    }
+
+    .search-section input[type="date"] {
+        max-width: 200px;
+    }
+
+    .search-section .btn-primary {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        transition: background-color 0.3s;
+    }
+
+    .search-section .btn-primary:hover {
+        background-color: #0056b3;
+    }
+=======
+        .search-section {
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .search-section h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .search-section input {
+            padding: 10px;
+            width: 80%;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .search-section .btn-primary {
+            background-color: #6a8caf;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 25px;
+            transition: background-color 0.3s;
+        }
+
+        .search-section .btn-primary:hover {
+            background-color: #506d8f;
+        }
+>>>>>>> e385994a205eb7d0d60297549c4a87b41a394be2
+
+        /* Hotel Cards */
+        .hotel-list {
+            padding: 30px 20px;
+        }
+
+        .hotel-list h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .card-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .hotel-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            overflow: hidden;
+            max-width: 300px;
+            transition: transform 0.3s;
+        }
+
+        .hotel-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .hotel-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .hotel-card h3 {
+            margin-top: 10px;
+        }
+
+        .hotel-card .btn-secondary {
+            background-color: #28a745;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+        }
+
+        .hotel-card .btn-secondary:hover {
+            background-color: #218838;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            background-color: #6a8caf;
+            color: white;
+            padding: 15px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <header class="navbar">
+        <div class="logo">SmartStay</div>
+        <nav>
+            <ul class="nav-links">
+<<<<<<< HEAD
+                <li><a th:href="@{/}"><i class="fas fa-home"></i> Home</a></li>
+                <li><a th:href="@{/hotels}"><i class="fas fa-hotel"></i> Hotels</a></li>
+                
+                <!-- Dropdown for Login/Signup -->
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user"></i> Login/Signup</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/login}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                        <li><a class="dropdown-item" th:href="@{/register}"><i class="fas fa-user-plus"></i> Register</a></li>
+
+=======
+                <li><a th:href="@{/}">Home</a></li>
+                <li><a th:href="@{/hotels}">Hotels</a></li>
+                <li><a th:href="@{/reviews}">Reviews</a></li>
+                <li><a th:href="@{/contact}">Contact</a></li>
+                <!-- Dropdown for Login/Signup -->
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Login/Signup</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/login}">Login</a></li>
+                        <li><a class="dropdown-item" th:href="@{/register}">Register</a></li>
+                        <li><a class="dropdown-item" th:href="@{/add-hotel}">Add-hotel</a></li>
+>>>>>>> e385994a205eb7d0d60297549c4a87b41a394be2
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <!-- Hero Section with Slideshow -->
+    <section class="hero">
+        <div class="slider">
+<<<<<<< HEAD
+            <img th:src="@{/images/hotel14.jpg}" alt="Hotel 1">
+            <img th:src="@{/images/hotel10.jpg}" alt="Hotel 2">
+            <img th:src="@{/images/hotel2.jpg}" alt="Hotel 3">
+            <img th:src="@{/images/hotel5.jpg}" alt="Hotel 4">
+=======
+            <img th:src="@{/images/hotel1.jpg}" alt="Hotel 1">
+            <img th:src="@{/images/hotel2.jpg}" alt="Hotel 2">
+            <img th:src="@{/images/hotel3.jpg}" alt="Hotel 3">
+            <img th:src="@{/images/hotel4.jpg}" alt="Hotel 4">
+>>>>>>> e385994a205eb7d0d60297549c4a87b41a394be2
+        </div>
+        <div class="hero-text">
+            <h1>Explore Exceptional Stays</h1>
+            <p>Your perfect getaway, just a few clicks away.</p>
+<<<<<<< HEAD
+=======
+            <button class="btn-primary" th:onclick="|window.location='@{/start-journey}'|">Start Your Journey</button>
+>>>>>>> e385994a205eb7d0d60297549c4a87b41a394be2
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="search-section">
+<<<<<<< HEAD
+        <form th:action="@{/search}" method="get" id="searchForm">
+            <input type="text" name="location" placeholder="Enter a city or hotel" required>
+            <input type="date" name="checkIn" required>
+            <input type="date" name="checkOut" required>
+            <button type="submit" class="btn-primary">Search</button>
+        </form>
+    </section>
+
+   
+=======
+        <h2>Find Your Stay</h2>
+        <form th:action="@{/search}" method="get" id="searchForm">
+            <div class="form-group">
+                <input type="text" name="location" placeholder="Enter a city or hotel" required>
+            </div>
+            <div class="form-group">
+                <input type="date" name="checkIn" required>
+            </div>
+            <div class="form-group">
+                <input type="date" name="checkOut" required>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn-primary">Search</button>
+            </div>
+        </form>
+    </section>
+
+    <!-- Hotel Cards Section -->
+    <section class="hotel-list">
+        <h2>Top Hotels</h2>
+        <div class="card-container">
+            <div class="hotel-card" th:each="hotel : ${hotels}">
+                <img th:src="${images/hotel1.img}" th:alt="${hotel.name}">
+                <h3 th:text="${hotel.name}">Hotel Name</h3>
+                <p th:text="'Location: ' + ${hotel.location}">Location</p>
+                <button class="btn-secondary" th:onclick="|window.location='@{/hotel-details/{id}(id=${hotel.id})}'|">View More</button>
+            </div>
+        </div>
+    </section>
+>>>>>>> e385994a205eb7d0d60297549c4a87b41a394be2
+    
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 SmartStay. All rights reserved.</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

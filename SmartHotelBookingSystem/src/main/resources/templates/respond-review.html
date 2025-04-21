@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Respond to Review</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Respond to Review</h1>
+        <form action="/save-response" method="post">
+            <input type="hidden" th:value="${review.id}" name="reviewId">
+            <div class="mb-3">
+                <label for="guestName" class="form-label">Guest Name</label>
+                <input type="text" class="form-control" id="guestName" th:value="${review.guestName}" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="rating" class="form-label">Rating</label>
+                <input type="number" class="form-control" id="rating" th:value="${review.rating}" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="comment" class="form-label">Comment</label>
+                <textarea class="form-control" id="comment" th:text="${review.comment}" readonly></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="response" class="form-label">Your Response</label>
+                <textarea class="form-control" id="response" name="response" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Response</button>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

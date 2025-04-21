@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loyalty Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem 2rem;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-header h1 {
+            margin: 0;
+            color: #333;
+        }
+
+        .points-section {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 2rem;
+        }
+
+        .points-card {
+            background: #4CAF50;
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+            width: 30%;
+        }
+
+        .points-card h2 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .points-card p {
+            margin: 0.5rem 0 0;
+        }
+
+        .rewards-section {
+            margin-top: 2rem;
+        }
+
+        .rewards-section h2 {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .reward-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            background: #f9f9f9;
+        }
+
+        .reward-item h3 {
+            margin: 0;
+            color: #555;
+        }
+
+        .reward-item button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .reward-item button:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Loyalty Dashboard</h1>
+    </header>
+    <div class="container">
+        <div class="dashboard-header">
+            <h1>Welcome, [User Name]</h1>
+            <p>Your loyalty points and rewards at a glance</p>
+        </div>
+        <div class="points-section">
+            <div class="points-card">
+                <h2>1200</h2>
+                <p>Total Points</p>
+            </div>
+            <div class="points-card">
+                <h2>800</h2>
+                <p>Redeemed Points</p>
+            </div>
+            <div class="points-card">
+                <h2>400</h2>
+                <p>Available Points</p>
+            </div>
+        </div>
+        <div class="rewards-section">
+            <h2>Available Rewards</h2>
+            <div class="reward-item">
+                <h3>Free Night Stay</h3>
+                <button>Redeem</button>
+            </div>
+            <div class="reward-item">
+                <h3>50% Off Spa</h3>
+                <button>Redeem</button>
+            </div>
+            <div class="reward-item">
+                <h3>Complimentary Breakfast</h3>
+                <button>Redeem</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

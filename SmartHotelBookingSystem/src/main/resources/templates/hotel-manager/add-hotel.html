@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Hotel</title>
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #8181f1;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-top: 15px;
+            font-weight: bold;
+            color: #555555;
+        }
+
+        input, textarea, select, button {
+            margin-top: 5px;
+            padding: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        button {
+            margin-top: 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Add Hotel</h1>
+        <form action="/add-hotel" method="post">
+            <label for="hotelName">Hotel Name</label>
+            <input type="text" id="hotelName" name="hotelName" placeholder="Enter hotel name" required>
+
+            <label for="location">Location</label>
+            <input type="text" id="location" name="location" placeholder="Enter location" required>
+
+            <label for="description">Description</label>
+            <textarea id="description" name="description" rows="4" placeholder="Enter hotel description" required></textarea>
+
+            <label for="rating">Rating</label>
+            <select id="rating" name="rating" required>
+                <option value="" disabled selected>Select rating</option>
+                <option value="1">1 Star</option>
+                <option value="2">2 Stars</option>
+                <option value="3">3 Stars</option>
+                <option value="4">4 Stars</option>
+                <option value="5">5 Stars</option>
+            </select>
+
+            <label for="pricePerNight">Price Per Night</label>
+            <input type="number" id="pricePerNight" name="pricePerNight" placeholder="Enter price per night" required>
+
+            <label for="imageUrl">Image URL</label>
+            <input type="url" id="imageUrl" name="imageUrl" placeholder="Enter image URL">
+
+            <button type="submit">Add Hotel</button>
+        </form>
+    </div>
+</body>
+</html>

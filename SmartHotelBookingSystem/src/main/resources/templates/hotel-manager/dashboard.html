@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 1rem;
+            padding: 1.5rem;
+            width: 300px;
+            text-align: center;
+        }
+
+        .card h3 {
+            margin: 0.5rem 0;
+            color: #333;
+        }
+
+        .card p {
+            color: #666;
+        }
+
+        .card a {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .card a:hover {
+            background-color: #45a049;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #333;
+            color: white;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Hotel Manager Dashboard</h1>
+    </header>
+    <div class="container">
+        <div class="card">
+            <h3>Manage Bookings</h3>
+            <p>View and manage all hotel bookings.</p>
+            <a href="/manage-bookings">Go to Bookings</a>
+        </div>
+        <div class="card">
+            <h3>Manage Rooms</h3>
+            <p>Update room availability and details.</p>
+            <a href="/manage-rooms">Go to Rooms</a>
+        </div>
+        <div class="card">
+            <h3>View Reports</h3>
+            <p>Analyze hotel performance and statistics.</p>
+            <a href="/view-reports">Go to Reports</a>
+        </div>
+        <div class="card">
+            <h3>Manage Staff</h3>
+            <p>View and manage staff information.</p>
+            <a href="/manage-staff">Go to Staff</a>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2023 Smart Hotel Booking System</p>
+    </footer>
+</body>
+</html></div></html>

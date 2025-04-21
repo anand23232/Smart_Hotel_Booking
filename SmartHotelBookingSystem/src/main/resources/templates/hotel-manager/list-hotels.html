@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Manager - List of Hotels</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f8f8f8;
+            color: #555;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+        .btn {
+            padding: 8px 12px;
+            text-decoration: none;
+            color: #fff;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .btn-edit {
+            background-color: #4CAF50;
+        }
+        .btn-delete {
+            background-color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>List of Hotels</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Hotel Name</th>
+                    <th>Location</th>
+                    <th>Rating</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Example row -->
+                <tr>
+                    <td>Grand Palace Hotel</td>
+                    <td>New York</td>
+                    <td>4.5</td>
+                    <td class="actions">
+                        <a href="/edit-hotel/1" class="btn btn-edit">Edit</a>
+                        <a href="/delete-hotel/1" class="btn btn-delete">Delete</a>
+                    </td>
+                </tr>
+                <!-- Dynamic rows will be added here -->
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
