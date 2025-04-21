@@ -11,15 +11,7 @@ public class Hotel {
 
     private String name;
     private String location;
-<<<<<<< HEAD
-    private String imageUrl;
-=======
-<<<<<<< HEAD
-    
-=======
-    private String imageUrl;
->>>>>>> e385994a205eb7d0d60297549c4a87b41a394be2
->>>>>>> 1e2633e35b71458e053b5fb96118fc5088bcd161
+private String imageUrl;
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
     private List<Room> rooms;

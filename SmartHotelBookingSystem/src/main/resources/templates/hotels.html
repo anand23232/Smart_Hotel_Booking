@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-    
->>>>>>> e385994a205eb7d0d60297549c4a87b41a394be2
->>>>>>> 1e2633e35b71458e053b5fb96118fc5088bcd161
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotels</title>
@@ -25,20 +18,12 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
-<<<<<<< HEAD
         .hotel-card img {
-=======
-.hotel-card img {
->>>>>>> 1e2633e35b71458e053b5fb96118fc5088bcd161
             width: 100%;
             height: 200px;
             object-fit: cover;
         }
-<<<<<<< HEAD
         .hotel-card .details {
-=======
-                .hotel-card .details {
->>>>>>> 1e2633e35b71458e053b5fb96118fc5088bcd161
             padding: 15px;
         }
         .hotel-card .details h3 {
@@ -49,9 +34,7 @@
             margin: 5px 0;
             color: #555;
         }
-<<<<<<< HEAD
-=======
-.search-bar-container {
+        .search-bar-container {
             display: flex;
             justify-content: center;
             margin: 20px 0;
@@ -76,37 +59,11 @@
         .search-button:hover {
             background-color: #0056b3;
         }
->>>>>>> 1e2633e35b71458e053b5fb96118fc5088bcd161
     </style>
 </head>
 <body>
     <h1>Available Hotels</h1>
-<<<<<<< HEAD
-    <div class="hotel-grid">
-        <!-- Hotel 1 -->
-        <div class="hotel-card">
-            <img th:src="@{/images/hotel1.jpg}" alt="Hotel 1">
-            <div class="details">
-                <h3>Hotel Name 1</h3>
-                <p>Price: $120 per night</p>
-            </div>
-        </div>
-        <!-- Hotel 2 -->
-        <div class="hotel-card">
-            <img th:src="@{/images/hotel2.jpg}" alt="Hotel 2">
-            <div class="details">
-                <h3>Hotel Name 2</h3>
-                <p>Price: $150 per night</p>
-            </div>
-        </div>
-        <!-- Hotel 3 -->
-        <div class="hotel-card">
-            <img th:src="@{/images/hotel3.jpg}" alt="Hotel 3">
-            <div class="details">
-                <h3>Hotel Name 3</h3>
-                <p>Price: $100 per night</p>
-=======
-<div class="search-bar-container">
+    <div class="search-bar-container">
         <input type="text" id="search-bar" class="search-bar" placeholder="Search for a hotel...">
         <button class="search-button" onclick="searchHotels()">Search</button>
     </div>
@@ -115,11 +72,7 @@
             const searchQuery = document.getElementById('search-bar').value.toLowerCase();
             const hotelCards = document.querySelectorAll('.hotel-card');
             let found = false;
-<<<<<<< HEAD
- 
-=======
 
->>>>>>> e385994a205eb7d0d60297549c4a87b41a394be2
             hotelCards.forEach(card => {
                 const hotelName = card.querySelector('.details h3').textContent.toLowerCase();
                 if (hotelName.includes(searchQuery)) {
@@ -129,11 +82,7 @@
                     card.style.border = '1px solid #ddd';
                 }
             });
-<<<<<<< HEAD
- 
-=======
 
->>>>>>> e385994a205eb7d0d60297549c4a87b41a394be2
             if (!found) {
                 alert('No hotels found matching your search.');
             }
@@ -142,12 +91,11 @@
     <div class="hotel-grid">
         <!-- Dynamic Hotel List -->
         <div class="hotel-card" th:each="hotel : ${hotels}">
-<img th:src="@{/images/hotel{id}.jpg(id=${hotel.id})}" th:alt="${hotel.name}">
-<div class="details">
+            <img th:src="@{/images/hotel{id}.jpg(id=${hotel.id})}" th:alt="${hotel.name}">
+            <div class="details">
                 <h3 th:text="${hotel.name}">Hotel Name</h3>
-                                <p th:text="'Location: ' + ${hotel.location}">Location</p>
+                <p th:text="'Location: ' + ${hotel.location}">Location</p>
                 <a th:href="@{/hotel-details/{id}(id=${hotel.id})}" class="btn btn-primary">View Details</a>
->>>>>>> 1e2633e35b71458e053b5fb96118fc5088bcd161
             </div>
         </div>
     </div>
