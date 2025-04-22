@@ -62,6 +62,101 @@
         .btn-back:hover {
             background-color: #0056b3;
         }
+
+        .review-box {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f1f1f1;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .review-box h2 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .review-box textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: none;
+            font-size: 1em;
+        }
+
+        .review-box .rating {
+            margin: 10px 0;
+        }
+
+        .review-box .rating label {
+            font-size: 1.5em;
+            color: #ccc;
+            cursor: pointer;
+        }
+
+        .review-box .rating input {
+            display: none;
+        }
+
+        .review-box .rating input:checked ~ label,
+        .review-box .rating input:hover ~ label {
+            color: #FFD700;
+        }
+
+        .review-box button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .review-box button:hover {
+            background-color: #0056b3;
+        }
+
+        .submitted-reviews {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .submitted-reviews h2 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .submitted-reviews .review {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .submitted-reviews .review:last-child {
+            border-bottom: none;
+        }
+
+        .submitted-reviews .review p {
+            margin: 5px 0;
+            line-height: 1.6;
+        }
+
+        .submitted-reviews .review .reviewer {
+            font-weight: bold;
+            color: #007BFF;
+        }
+
+        .submitted-reviews .review .stars {
+            color: #FFD700;
+            font-size: 1.2em;
+        }
     </style>
 </head>
 <body>
@@ -73,6 +168,40 @@
             <p><strong>Description:</strong> <span th:text="${hotel.description}">Hotel Description</span></p>
             <p class="price"><strong>Price:</strong> $<span th:text="${hotel.price}">Hotel Price</span> per night</p>
             <a th:href="@{/hotels}" class="btn-back">Back to Hotels</a>
+        </div>
+
+        <!-- Submitted Reviews Section -->
+        <div class="submitted-reviews">
+            <h2>Reviews</h2>
+            <div th:each="review : ${reviews}">
+                <div class="review">
+                    <p class="reviewer" th:text="${review.reviewer}">Reviewer Name</p>
+                    <p th:text="${review.content}">Review Content</p>
+                    <p class="stars" th:utext="${'&#9733;'.repeat(review.rating)}"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Review Form Section -->
+        <div class="review-box">
+            <h2>Leave a Review</h2>
+            <form th:action="@{/submitReview}" method="post">
+                <input type="hidden" th:name="hotelId" th:value="${hotel.id}">
+                <textarea name="review" placeholder="Write your review here..." required></textarea>
+                <div class="rating">
+                    <input type="radio" id="star5" name="rating" value="5" required>
+                    <label for="star5">&#9733;</label>
+                    <input type="radio" id="star4" name="rating" value="4">
+                    <label for="star4">&#9733;</label>
+                    <input type="radio" id="star3" name="rating" value="3">
+                    <label for="star3">&#9733;</label>
+                    <input type="radio" id="star2" name="rating" value="2">
+                    <label for="star2">&#9733;</label>
+                    <input type="radio" id="star1" name="rating" value="1">
+                    <label for="star1">&#9733;</label>
+                </div>
+                <button type="submit">Submit Review</button>
+            </form>
         </div>
     </div>
 </body>
