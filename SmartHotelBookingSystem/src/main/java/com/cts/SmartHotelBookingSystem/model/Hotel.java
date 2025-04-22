@@ -11,7 +11,12 @@ public class Hotel {
 
     private String name;
     private String location;
-private String imageUrl;
+    private String imageUrl;
+
+    @Column(length = 1000) // Allows for a longer description
+    private String description;
+
+    private Double price; // Price per night
 
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
     private List<Room> rooms;
@@ -47,6 +52,22 @@ private String imageUrl;
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public List<Room> getRooms() {

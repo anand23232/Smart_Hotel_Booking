@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${hotel.name}">Hotel Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .hotel-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .hotel-details {
+            margin-top: 20px;
+        }
+
+        .hotel-details h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .hotel-details p {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        .hotel-details .price {
+            font-size: 1.5em;
+            color: #007BFF;
+            margin: 20px 0;
+        }
+
+        .btn-back {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-back:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img th:src="@{/images/hotel{id}.jpg(id=${hotel.id})}" th:alt="${hotel.name}" class="hotel-image">
+        <div class="hotel-details">
+            <h1 th:text="${hotel.name}">Hotel Name</h1>
+            <p><strong>Location:</strong> <span th:text="${hotel.location}">Hotel Location</span></p>
+            <p><strong>Description:</strong> <span th:text="${hotel.description}">Hotel Description</span></p>
+            <p class="price"><strong>Price:</strong> $<span th:text="${hotel.price}">Hotel Price</span> per night</p>
+            <a th:href="@{/hotels}" class="btn-back">Back to Hotels</a>
+        </div>
+    </div>
+</body>
+</html>

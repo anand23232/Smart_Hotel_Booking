@@ -29,8 +29,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #5b6893;
-            color: white;
+            background-color: rgb(234, 247, 247);
+            color: rgb(12, 12, 12);
             padding: 15px 30px;
         }
 
@@ -77,7 +77,7 @@
             width: 100%;
             height: 100%;
             display: flex;
-            animation: slideShow 20s infinite;
+            animation: slideShow 25s infinite;
         }
 
         .slider img {
@@ -265,15 +265,12 @@
             <ul class="nav-links">
                 <li><a th:href="@{/}"><i class="fas fa-home"></i> Home</a></li>
                 <li><a th:href="@{/hotels}"><i class="fas fa-hotel"></i> Hotels</a></li>
-                <li><a th:href="@{/reviews}"><i class="fas fa-star"></i> Reviews</a></li>
-                <li><a th:href="@{/contact}"><i class="fas fa-envelope"></i> Contact</a></li>
                 <!-- Dropdown for Login/Signup -->
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user"></i> Login/Signup</a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" th:href="@{/login}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
                         <li><a class="dropdown-item" th:href="@{/register}"><i class="fas fa-user-plus"></i> Register</a></li>
-                        <li><a class="dropdown-item" th:href="@{/add-hotel}"><i class="fas fa-plus-circle"></i> Add Hotel</a></li>
                     </ul>
                 </li>
             </ul>
@@ -283,15 +280,15 @@
     <!-- Hero Section with Slideshow -->
     <section class="hero">
         <div class="slider">
-            <img th:src="@{/images/hotel1.jpg}" alt="Hotel 1">
+            <img th:src="@{/images/hotel14.jpg}" alt="Hotel 1">
             <img th:src="@{/images/hotel2.jpg}" alt="Hotel 2">
-            <img th:src="@{/images/hotel3.jpg}" alt="Hotel 3">
-            <img th:src="@{/images/hotel4.jpg}" alt="Hotel 4">
+            <img th:src="@{/images/hotel10.jpg}" alt="Hotel 3">
+            <img th:src="@{/images/hotel5.jpg}" alt="Hotel 4">
         </div>
         <div class="hero-text">
             <h1>Explore Exceptional Stays</h1>
             <p>Your perfect getaway, just a few clicks away.</p>
-            <button class="btn-primary" th:onclick="|window.location='@{/start-journey}'|">Start Your Journey</button>
+
         </div>
     </section>
 
@@ -306,17 +303,7 @@
     </section>
 
     <!-- Hotel Cards Section -->
-    <section class="hotel-list">
-        <h2>Top Hotels</h2>
-        <div class="card-container">
-            <div class="hotel-card" th:each="hotel : ${hotels}">
-                <img th:src="${hotel.imageUrl}" th:alt="${hotel.name}">
-                <h3 th:text="${hotel.name}">Hotel Name</h3>
-                <p th:text="'Location: ' + ${hotel.location}">Location</p>
-                <button class="btn-secondary" th:onclick="|window.location='@{/hotel-details/{id}(id=${hotel.id})}'|">View More</button>
-            </div>
-        </div>
-    </section>
+    
 
     <!-- Footer -->
     <footer class="footer">
