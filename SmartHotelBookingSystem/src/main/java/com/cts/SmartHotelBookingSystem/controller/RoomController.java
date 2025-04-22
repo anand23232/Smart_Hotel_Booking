@@ -19,10 +19,29 @@ public class RoomController {
     @Autowired
     private HotelService hotelService;
 
+    // Updated method to handle query parameters for filtering rooms
     @GetMapping
-    public String getAllRooms(Model model) {
-        List<Room> rooms = roomService.getAllRooms();
-        model.addAttribute("rooms", rooms);
+    public String getRooms(
+            @RequestParam(value = "checkIn", required = false) String checkIn,
+            @RequestParam(value = "checkOut", required = false) String checkOut,
+            @RequestParam(value = "guests", required = false, defaultValue = "1") int guests,
+            @RequestParam(value = "rooms", required = false, defaultValue = "1") int rooms,
+            Model model) {
+
+        // If query parameters are provided, filter rooms based on the parameters
+        if (checkIn != null && checkOut != null) {
+            List<Room> availableRooms = roomService.getAvailableRooms(checkIn, checkOut, guests, rooms);
+            model.addAttribute("rooms", availableRooms);
+            model.addAttribute("checkIn", checkIn);
+            model.addAttribute("checkOut", checkOut);
+            model.addAttribute("guests", guests);
+            model.addAttribute("rooms", rooms);
+        } else {
+            // If no query parameters, display all rooms
+            List<Room> roomsList = roomService.getAllRooms();
+            model.addAttribute("rooms", roomsList);
+        }
+
         return "rooms"; // Maps to rooms.html
     }
 

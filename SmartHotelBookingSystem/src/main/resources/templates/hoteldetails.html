@@ -5,28 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${hotel.name}">Hotel Details</title>
     <style>
+        /* General Styles */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Roboto', Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f9f9f9;
+            background-color: #f4f4f9;
             color: #333;
         }
 
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+        }
+
+        .navbar .hotel-name {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .navbar .date-selection {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .navbar .date-selection input,
+        .navbar .date-selection select {
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+
+        .navbar .date-selection button {
+            padding: 8px 15px;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar .date-selection button:hover {
+            background-color: #003f8a;
+        }
+
         .container {
-            max-width: 800px;
-            margin: 30px auto;
+            max-width: 900px;
+            margin: 40px auto;
             padding: 20px;
             background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
         }
 
         .hotel-image {
             width: 100%;
             height: 400px;
             object-fit: cover;
-            border-radius: 8px;
+            border-radius: 12px;
+            margin-bottom: 20px;
         }
 
         .hotel-details {
@@ -34,109 +79,43 @@
         }
 
         .hotel-details h1 {
-            font-size: 2em;
+            font-size: 2.5em;
             margin-bottom: 10px;
+            color: #333;
         }
 
         .hotel-details p {
             margin: 10px 0;
-            line-height: 1.6;
+            line-height: 1.8;
+            font-size: 1.1em;
         }
 
         .hotel-details .price {
-            font-size: 1.5em;
+            font-size: 1.8em;
             color: #007BFF;
             margin: 20px 0;
+            font-weight: bold;
         }
 
-        .btn-back {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #007BFF;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-        }
-
-        .btn-back:hover {
-            background-color: #0056b3;
-        }
-
-        .review-box {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: #f1f1f1;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .review-box h2 {
-            font-size: 1.5em;
-            margin-bottom: 15px;
-        }
-
-        .review-box textarea {
-            width: 100%;
-            height: 100px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            resize: none;
-            font-size: 1em;
-        }
-
-        .review-box .rating {
-            margin: 10px 0;
-        }
-
-        .review-box .rating label {
-            font-size: 1.5em;
-            color: #ccc;
-            cursor: pointer;
-        }
-
-        .review-box .rating input {
-            display: none;
-        }
-
-        .review-box .rating input:checked ~ label,
-        .review-box .rating input:hover ~ label {
-            color: #FFD700;
-        }
-
-        .review-box button {
-            margin-top: 10px;
-            padding: 10px 20px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .review-box button:hover {
-            background-color: #0056b3;
-        }
-
+        /* Reviews Section */
         .submitted-reviews {
-            margin-top: 30px;
+            margin-top: 40px;
             padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: #f9f9f9;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
         .submitted-reviews h2 {
-            font-size: 1.5em;
-            margin-bottom: 15px;
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #333;
         }
 
         .submitted-reviews .review {
-            margin-bottom: 15px;
-            padding: 10px;
-            border-bottom: 1px solid #ccc;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
         }
 
         .submitted-reviews .review:last-child {
@@ -146,20 +125,110 @@
         .submitted-reviews .review p {
             margin: 5px 0;
             line-height: 1.6;
+            font-size: 1em;
         }
 
         .submitted-reviews .review .reviewer {
             font-weight: bold;
             color: #007BFF;
+            font-size: 1.1em;
         }
 
         .submitted-reviews .review .stars {
             color: #FFD700;
-            font-size: 1.2em;
+            font-size: 1.3em;
+        }
+
+        /* Review Form */
+        .review-box {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .review-box h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .review-box textarea {
+            width: 100%;
+            height: 120px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            resize: none;
+            font-size: 1em;
+            margin-bottom: 15px;
+        }
+
+        .review-box .rating {
+            margin: 15px 0;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .review-box .rating label {
+            font-size: 1.8em;
+            color: #ccc;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .review-box .rating input {
+            display: none;
+        }
+
+        .review-box .rating input:checked ~ label,
+        .review-box .rating input:hover ~ label,
+        .review-box .rating input:hover ~ label ~ label {
+            color: #FFD700;
+        }
+
+        .review-box button {
+            padding: 12px 25px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .review-box button:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
         }
     </style>
 </head>
 <body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="hotel-name" th:text="${hotel.name}">Hotel Name</div>
+        <div class="date-selection">
+            <input type="date" id="check-in" name="check-in" placeholder="Check-in Date">
+            <input type="date" id="check-out" name="check-out" placeholder="Check-out Date">
+            <select id="guests" name="guests">
+                <option value="1">1 Guest</option>
+                <option value="2">2 Guests</option>
+                <option value="3">3 Guests</option>
+                <option value="4">4 Guests</option>
+            </select>
+            <select id="rooms" name="rooms">
+                <option value="1">1 Room</option>
+                <option value="2">2 Rooms</option>
+                <option value="3">3 Rooms</option>
+                <option value="4">4 Rooms</option>
+            </select>
+            <button type="button" onclick="updateBooking()">Update</button>
+        </div>
+    </div>
+
     <div class="container">
         <img th:src="@{/images/hotel{id}.jpg(id=${hotel.id})}" th:alt="${hotel.name}" class="hotel-image">
         <div class="hotel-details">
@@ -167,7 +236,6 @@
             <p><strong>Location:</strong> <span th:text="${hotel.location}">Hotel Location</span></p>
             <p><strong>Description:</strong> <span th:text="${hotel.description}">Hotel Description</span></p>
             <p class="price"><strong>Price:</strong> $<span th:text="${hotel.price}">Hotel Price</span> per night</p>
-            <a th:href="@{/hotels}" class="btn-back">Back to Hotels</a>
         </div>
 
         <!-- Submitted Reviews Section -->
@@ -204,5 +272,23 @@
             </form>
         </div>
     </div>
+
+    <script>
+        function updateBooking() {
+            const checkIn = document.getElementById('check-in').value;
+            const checkOut = document.getElementById('check-out').value;
+            const guests = document.getElementById('guests').value;
+            const rooms = document.getElementById('rooms').value;
+    
+            if (!checkIn || !checkOut) {
+                alert('Please select both check-in and check-out dates.');
+                return;
+            }
+    
+            // Redirect to the rooms page with query parameters
+            const url = `/rooms?checkIn=${checkIn}&checkOut=${checkOut}&guests=${guests}&rooms=${rooms}`;
+            window.location.href = url;
+        }
+    </script>
 </body>
 </html>

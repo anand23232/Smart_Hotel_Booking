@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotels</title>
+    <!-- Add Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         .hotel-grid {
             display: grid;
@@ -17,6 +19,10 @@
             overflow: hidden;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
         }
         .hotel-card:hover {
             transform: scale(1.10) rotateX(6deg) rotateY(6deg);
@@ -37,6 +43,12 @@
         .hotel-card .details p {
             margin: 5px 0;
             color: #555;
+        }
+        .hotel-card .details .price {
+            margin-top: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #007BFF;
         }
         .search-bar-container {
             display: flex;
@@ -63,9 +75,45 @@
         .search-button:hover {
             background-color: #0056b3;
         }
+
+        /* Pop-up effect for matching hotels */
+        .highlight {
+            transform: scale(1.15);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border: 2px solid rgb(246, 252, 246);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Center and style the heading */
+        h1 {
+            text-align: center;
+            font-size: 2.5em;
+            color: #333;
+            margin: 20px 0;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Navigation arrow */
+        .nav-arrow {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 1.5em;
+            color: #007BFF;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        .nav-arrow:hover {
+            color: #0056b3;
+        }
     </style>
 </head>
 <body>
+    <!-- Navigation Arrow -->
+    <a href="/" class="nav-arrow"><i class="fas fa-arrow-left"></i></a>
+
     <h1>Available Hotels</h1>
     <div class="search-bar-container">
         <input type="text" id="search-bar" class="search-bar" placeholder="Search for a hotel...">
@@ -80,10 +128,10 @@
             hotelCards.forEach(card => {
                 const hotelName = card.querySelector('.details h3').textContent.toLowerCase();
                 if (hotelName.includes(searchQuery)) {
-                    card.style.border = '2px solid green';
+                    card.classList.add('highlight'); // Add the pop-up effect
                     found = true;
                 } else {
-                    card.style.border = '1px solid #ddd';
+                    card.classList.remove('highlight'); // Remove the effect if not matching
                 }
             });
 
@@ -91,17 +139,29 @@
                 alert('No hotels found matching your search.');
             }
         }
+
+        // Remove highlight when clicking outside
+        document.addEventListener('click', function (event) {
+            const hotelCards = document.querySelectorAll('.hotel-card');
+            const isClickInside = event.target.closest('.hotel-card') || event.target.closest('.search-bar-container');
+
+            if (!isClickInside) {
+                hotelCards.forEach(card => {
+                    card.classList.remove('highlight'); // Remove the highlight class
+                });
+            }
+        });
     </script>
     <div class="hotel-grid">
         <!-- Dynamic Hotel List -->
-        <div class="hotel-card" th:each="hotel : ${hotels}">
+        <a th:href="@{/hotels/{id}(id=${hotel.id})}" class="hotel-card" th:each="hotel : ${hotels}">
             <img th:src="@{/images/hotel{id}.jpg(id=${hotel.id})}" th:alt="${hotel.name}">
             <div class="details">
                 <h3 th:text="${hotel.name}">Hotel Name</h3>
                 <p th:text="'Location: ' + ${hotel.location}">Location</p>
-                <a th:href="@{/hotels/{id}(id=${hotel.id})}" class="btn btn-primary">View Details</a>
+                <p class="price" th:text="'Price: $' + ${hotel.price}">Price</p>
             </div>
-        </div>
+        </a>
     </div>
 </body>
 </html>
