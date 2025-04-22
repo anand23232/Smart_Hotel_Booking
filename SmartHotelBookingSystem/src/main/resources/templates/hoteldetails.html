@@ -165,28 +165,31 @@
             margin-bottom: 15px;
         }
 
-        .review-box .rating {
-            margin: 15px 0;
-            display: flex;
-            justify-content: flex-start;
-        }
+       
+    .review-box .rating {
+        margin: 15px 0;
+        display: flex;
+        justify-content: flex-start;
+        gap: 5px; /* Add spacing between stars */
+    }
 
-        .review-box .rating label {
-            font-size: 1.8em;
-            color: #ccc;
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
+    .review-box .rating label {
+        font-size: 1.8em;
+        color: #ccc;
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
 
-        .review-box .rating input {
-            display: none;
-        }
+    .review-box .rating input {
+        display: none;
+    }
 
-        .review-box .rating input:checked ~ label,
-        .review-box .rating input:hover ~ label,
-        .review-box .rating input:hover ~ label ~ label {
-            color: #FFD700;
-        }
+    .review-box .rating input:checked ~ label,
+    .review-box .rating input:checked + label,
+    .review-box .rating label:hover,
+    .review-box .rating label:hover ~ label {
+        color: #FFD700; /* Gold color for selected stars */
+    }
 
         .review-box button {
             padding: 12px 25px;
@@ -257,16 +260,16 @@
                 <input type="hidden" th:name="hotelId" th:value="${hotel.id}">
                 <textarea name="review" placeholder="Write your review here..." required></textarea>
                 <div class="rating">
-                    <input type="radio" id="star5" name="rating" value="5" required>
-                    <label for="star5">&#9733;</label>
-                    <input type="radio" id="star4" name="rating" value="4">
-                    <label for="star4">&#9733;</label>
-                    <input type="radio" id="star3" name="rating" value="3">
-                    <label for="star3">&#9733;</label>
+                    <input type="radio" id="star1" name="rating" value="1" required>
+                    <label for="star1">&#9733;</label>
                     <input type="radio" id="star2" name="rating" value="2">
                     <label for="star2">&#9733;</label>
-                    <input type="radio" id="star1" name="rating" value="1">
-                    <label for="star1">&#9733;</label>
+                    <input type="radio" id="star3" name="rating" value="3">
+                    <label for="star3">&#9733;</label>
+                    <input type="radio" id="star4" name="rating" value="4">
+                    <label for="star4">&#9733;</label>
+                    <input type="radio" id="star5" name="rating" value="5">
+                    <label for="star5">&#9733;</label>
                 </div>
                 <button type="submit">Submit Review</button>
             </form>

@@ -1,23 +1,25 @@
 package com.cts.SmartHotelBookingSystem.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Room {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String description;
-    private int capacity; // Maximum number of guests the room can accommodate
-    private int availableRooms; // Number of available rooms
+
+    private String roomNumber;
+    private String type; // e.g., Single, Double, Suite
     private double price;
 
-    // Getters and setters
+    private int capacity; // Maximum number of guests the room can accommodate
+    private int availableRooms; // Number of available rooms of this type
+
+    @ManyToOne
+    @JoinColumn(name = "hotel_id", nullable = false)
+    private Hotel hotel;
+
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -26,20 +28,28 @@ public class Room {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getRoomNumber() {
+        return roomNumber;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setRoomNumber(String roomNumber) {
+        this.roomNumber = roomNumber;
     }
 
-    public String getDescription() {
-        return description;
+    public String getType() {
+        return type;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public int getCapacity() {
@@ -58,11 +68,11 @@ public class Room {
         this.availableRooms = availableRooms;
     }
 
-    public double getPrice() {
-        return price;
+    public Hotel getHotel() {
+        return hotel;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
     }
 }
