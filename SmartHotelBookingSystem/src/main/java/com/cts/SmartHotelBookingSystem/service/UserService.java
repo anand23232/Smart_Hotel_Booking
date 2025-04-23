@@ -31,4 +31,9 @@ public class UserService {
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
+
+    // New method to check if username or email is already taken
+    public boolean isUsernameOrEmailTaken(String username, String email) {
+        return userRepository.findByUsername(username) != null || userRepository.findByEmail(email) != null;
+    }
 }
