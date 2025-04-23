@@ -8,10 +8,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body{
+            
             margin:0;
             padding: 0;
             box-sizing: border-box;
             width:100%;
+            background: url('/images/hotel6.jpg') no-repeat center center fixed; /* Add background image */
+            background-size: cover;
+        }
+        
+
+        .back-to-home {
+            position: absolute;
+            top: 20px;
+            left: 50px;
+            font-size: 16px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .back-to-home i {
+            margin-right: 5px;
         }
         .hotel-grid {
             display: grid;
@@ -115,11 +131,25 @@
         .nav-arrow:hover {
             color: #0056b3;
         }
+        .back-to-home {
+            font-size: 14px;
+            color: #0c0d0d;
+        }
+
+        .back-to-home i {
+            margin-right: 5px;
+            font-size: 24px;
+        }
     </style>
 </head>
 <body>
-    <!-- Navigation Arrow -->
-    <a href="/" class="nav-arrow"><i class="fas fa-arrow-left"></i></a>
+    <!-- Back to Home Arrow -->
+    <div class="container mt-3">
+        <a href="/" class="btn btn-link back-to-home">
+            <i class="fas fa-arrow-left"></i> 
+        </a>
+    </div>
+
 
     <h1>Available Hotels</h1>
     <div class="search-bar-container">
