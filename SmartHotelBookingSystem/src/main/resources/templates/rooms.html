@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:text="${hotel.name} - Rooms">Room Details</title>
+    <title th:text="${hotel != null ? hotel.name + ' - Rooms' : 'Hotel Not Found - Rooms'}">Room Details</title>
     <style>
         /* General Styles */
         body {
@@ -125,21 +125,21 @@
 <body>
     <!-- Navbar -->
     <div class="navbar">
-        <div class="hotel-name" th:text="${hotel.name}">Hotel Name</div>
+        <div class="hotel-name" th:text="${hotel != null ? hotel.name : 'Hotel Not Found'}">Hotel Name</div>
         <div class="date-selection">
-            <input type="date" id="check-in" name="check-in" placeholder="Check-in Date">
-            <input type="date" id="check-out" name="check-out" placeholder="Check-out Date">
-            <select id="guests" name="guests">
-                <option value="1">1 Guest</option>
-                <option value="2">2 Guests</option>
-                <option value="3">3 Guests</option>
-                <option value="4">4 Guests</option>
+            <input type="date" id="check-in" name="check-in" placeholder="Check-in Date" th:value="${checkIn}">
+            <input type="date" id="check-out" name="check-out" placeholder="Check-out Date" th:value="${checkOut}">
+            <select id="guests" name="guests" th:value="${guests}">
+                <option value="1" th:selected="${guests == 1}">1 Guest</option>
+                <option value="2" th:selected="${guests == 2}">2 Guests</option>
+                <option value="3" th:selected="${guests == 3}">3 Guests</option>
+                <option value="4" th:selected="${guests == 4}">4 Guests</option>
             </select>
-            <select id="rooms" name="rooms">
-                <option value="1">1 Room</option>
-                <option value="2">2 Rooms</option>
-                <option value="3">3 Rooms</option>
-                <option value="4">4 Rooms</option>
+            <select id="rooms" name="rooms" th:value="${rooms}">
+                <option value="1" th:selected="${rooms == 1}">1 Room</option>
+                <option value="2" th:selected="${rooms == 2}">2 Rooms</option>
+                <option value="3" th:selected="${rooms == 3}">3 Rooms</option>
+                <option value="4" th:selected="${rooms == 4}">4 Rooms</option>
             </select>
             <button type="button" onclick="updateBooking()">Update</button>
         </div>
@@ -147,14 +147,19 @@
 
     <div class="container">
         <h1>Available Rooms</h1>
-        <div th:each="room : ${rooms}" class="room-card">
-            <img th:src="@{/images/room{id}.jpg(id=${room.id})}" th:alt="${room.name}">
-            <div class="room-details">
-                <h3 th:text="${room.name}">Room Name</h3>
-                <p th:text="${room.description}">Room Description</p>
-                <p class="price" th:text="'Price: $' + ${room.price}">Room Price</p>
-                <button th:onclick="'window.location.href=\'/bookRoom/' + ${room.id} + '\' '">Book Now</button>
+        <div th:if="${rooms != null and !rooms.isEmpty()}">
+            <div th:each="room : ${rooms}" class="room-card">
+                <img th:src="@{/images/room{id}.jpg(id=${room.id})}" th:alt="${room.type}">
+                <div class="room-details">
+                    <h3 th:text="${room.type}">Room Type</h3>
+                    <p th:text="'Capacity: ' + ${room.capacity} + ' guests'">Room Capacity</p>
+                    <p class="price" th:text="'Price: $' + ${room.price}">Room Price</p>
+                    <button th:onclick="'window.location.href=\'/bookRoom/' + ${room.id} + '\' '">Book Now</button>
+                </div>
             </div>
+        </div>
+        <div th:if="${rooms == null or rooms.isEmpty()}">
+            <p>No rooms available for the selected criteria.</p>
         </div>
     </div>
 
@@ -165,7 +170,7 @@
             const guests = document.getElementById('guests').value;
             const rooms = document.getElementById('rooms').value;
 
-            alert(`Booking updated:\nCheck-in: ${checkIn}\nCheck-out: ${checkOut}\nGuests: ${guests}\nRooms: ${rooms}`);
+            window.location.href = `/rooms?checkIn=${checkIn}&checkOut=${checkOut}&guests=${guests}&rooms=${rooms}`;
         }
     </script>
 </body>

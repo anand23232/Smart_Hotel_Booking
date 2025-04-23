@@ -55,4 +55,10 @@ public class HotelController {
         model.addAttribute("hotel", hotel);
         return "hoteldetails"; // Render hoteldetails.html
     }
+
+    @GetMapping("/search")
+    @ResponseBody
+    public List<Hotel> searchHotels(@RequestParam("keyword") String keyword) {
+        return hotelService.searchHotels(keyword);
+    }
 }

@@ -31,4 +31,8 @@ public class HotelService {
     public void deleteHotel(Long id) {
         hotelRepository.deleteById(id);
     }
+
+    public List<Hotel> searchHotels(String keyword) {
+        return hotelRepository.findByNameContainingIgnoreCaseOrLocationContainingIgnoreCase(keyword, keyword);
+    }
 }

@@ -12,4 +12,6 @@ public interface HotelRepository extends JpaRepository<Hotel, Long> {
 
     // Custom query to find hotels by name (case-insensitive)
     List<Hotel> findByNameIgnoreCaseContaining(String name);
+
+    List<Hotel> findByNameContainingIgnoreCaseOrLocationContainingIgnoreCase(String name, String location);
 }
