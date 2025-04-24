@@ -26,6 +26,18 @@ public class UserController {
 public String loginPage(Model model) {
     return "users/login"; // Maps to login.html
 }
+@PostMapping("/login")
+public String loginUser(@RequestParam String username, @RequestParam String password, Model model) {
+    User user = userService.findByUsername(username);
+    if (user != null && userService.validatePassword(user, password)) {
+        // Login successful, redirect to a dashboard or home page
+        return "redirect:/dashboard";
+    } else {
+        // Login failed, show error message
+        model.addAttribute("error", "Invalid username or password");
+        return "users/login";
+    }
+}
 @GetMapping("/register")
 public String showRegisterPage() {
     return "users/register"; // This maps to register.html in the users folder
