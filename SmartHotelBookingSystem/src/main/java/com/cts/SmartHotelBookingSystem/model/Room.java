@@ -1,3 +1,4 @@
+
 package com.cts.SmartHotelBookingSystem.model;
 
 import jakarta.persistence.*;
@@ -8,9 +9,16 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "ROOMNUMBER")
     private String roomNumber;
+
     private String type; // e.g., Single, Double, Suite
     private double price;
+
+    private int capacity; // Maximum number of guests the room can accommodate
+
+    @Column(name = "AVAILABLEROOMS")
+    private int availableRooms; // Number of available rooms of this type
 
     @ManyToOne
     @JoinColumn(name = "hotel_id", nullable = false)
@@ -47,6 +55,22 @@ public class Room {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public int getAvailableRooms() {
+        return availableRooms;
+    }
+
+    public void setAvailableRooms(int availableRooms) {
+        this.availableRooms = availableRooms;
     }
 
     public Hotel getHotel() {

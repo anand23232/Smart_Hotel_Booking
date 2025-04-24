@@ -1,5 +1,6 @@
 package com.cts.SmartHotelBookingSystem.controller;
 
+import com.cts.SmartHotelBookingSystem.model.Hotel;
 import com.cts.SmartHotelBookingSystem.model.Room;
 import com.cts.SmartHotelBookingSystem.service.RoomService;
 import com.cts.SmartHotelBookingSystem.service.HotelService;
@@ -9,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @Controller
 @RequestMapping("/rooms")
 public class RoomController {
@@ -44,4 +44,30 @@ public class RoomController {
         roomService.deleteRoom(id);
         return "redirect:/rooms";
     }
+
+@GetMapping("/search")
+public String getRooms(
+        @RequestParam Long hotelId,
+        @RequestParam String checkIn,
+        @RequestParam String checkOut,
+        @RequestParam int guests,
+        @RequestParam int rooms,
+        Model model) {
+
+    // Fetch rooms for the specified hotel
+    List<Room> availableRooms = roomService.getRoomsByHotelIdAndGuests(hotelId, guests);
+
+    // Add data to the model
+    model.addAttribute("rooms", availableRooms);
+    model.addAttribute("checkIn", checkIn);
+    model.addAttribute("checkOut", checkOut);
+    model.addAttribute("guests", guests);
+    model.addAttribute("rooms", rooms);
+
+    // Fetch the hotel details and add to the model
+    Hotel hotel = hotelService.getHotelById(hotelId);
+    model.addAttribute("hotel", hotel);
+
+    return "rooms"; // Render rooms.html
+}
 }

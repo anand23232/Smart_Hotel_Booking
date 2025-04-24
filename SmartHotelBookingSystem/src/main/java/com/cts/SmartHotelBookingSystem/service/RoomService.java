@@ -31,4 +31,8 @@ public class RoomService {
     public void deleteRoom(Long id) {
         roomRepository.deleteById(id);
     }
+
+    public List<Room> getRoomsByHotelIdAndGuests(Long hotelId, int guests) {
+        return roomRepository.findAvailableRooms(hotelId, guests);
+    }
 }

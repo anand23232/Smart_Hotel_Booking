@@ -31,4 +31,17 @@ public class UserService {
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
+
+    // New method to check if username or email is already taken
+    public boolean isUsernameOrEmailTaken(String username, String email) {
+        return userRepository.findByUsername(username) != null || userRepository.findByEmail(email) != null;
+    }
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+    
+    public boolean validatePassword(User user, String rawPassword) {
+        // Assuming passwords are stored as plain text (not recommended in production)
+        return user.getPassword().equals(rawPassword);
+    }
 }
