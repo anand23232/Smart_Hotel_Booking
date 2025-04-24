@@ -31,6 +31,9 @@ public class UserService {
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
+    public List<User> getUsersByRole(String role) {
+        return userRepository.findByRole(role);
+    }
 
     // New method to check if username or email is already taken
     public boolean isUsernameOrEmailTaken(String username, String email) {
