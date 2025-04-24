@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Bookings</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table th, table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        table th {
+            background-color: #f8f8f8;
+            color: #555;
+        }
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .no-bookings {
+            text-align: center;
+            color: #888;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Your Bookings</h1>
+        <div id="bookingTable">
+            <!-- Booking table will be dynamically populated -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>Booking ID</th>
+                        <th>Hotel Name</th>
+                        <th>Check-in Date</th>
+                        <th>Check-out Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Example row -->
+                    <tr>
+                        <td>12345</td>
+                        <td>Grand Hotel</td>
+                        <td>2023-10-01</td>
+                        <td>2023-10-05</td>
+                        <td>Confirmed</td>
+                    </tr>
+                    <!-- Additional rows will be dynamically added here -->
+                </tbody>
+            </table>
+        </div>
+        <div class="no-bookings" style="display: none;">
+            <p>You have no bookings at the moment.</p>
+        </div>
+    </div>
+    <script>
+        // Example JavaScript to dynamically populate bookings
+        const bookings = []; // Replace with actual data from the backend
+
+        const bookingTable = document.querySelector('#bookingTable table tbody');
+        const noBookingsMessage = document.querySelector('.no-bookings');
+
+        if (bookings.length === 0) {
+            bookingTable.parentElement.style.display = 'none';
+            noBookingsMessage.style.display = 'block';
+        } else {
+            bookings.forEach(booking => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${booking.id}</td>
+                    <td>${booking.hotelName}</td>
+                    <td>${booking.checkInDate}</td>
+                    <td>${booking.checkOutDate}</td>
+                    <td>${booking.status}</td>
+                `;
+                bookingTable.appendChild(row);
+            });
+        }
+    </script>
+</body>
+</html>

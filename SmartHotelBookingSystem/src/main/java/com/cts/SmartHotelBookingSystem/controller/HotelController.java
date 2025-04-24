@@ -61,4 +61,5 @@ public class HotelController {
     public List<Hotel> searchHotels(@RequestParam("keyword") String keyword) {
         return hotelService.searchHotels(keyword);
     }
+    
 }
