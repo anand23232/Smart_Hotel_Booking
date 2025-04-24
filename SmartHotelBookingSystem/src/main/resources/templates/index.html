@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
- 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,12 +17,12 @@
             padding: 0;
             color: #333;
         }
- 
+
         a {
             text-decoration: none;
             color: inherit;
         }
- 
+
         /* Hero Section with Slideshow */
         .hero {
             position: relative;
@@ -32,7 +31,7 @@
             color: white;
             text-align: center;
         }
- 
+
         .slider {
             position: absolute;
             top: 0;
@@ -42,37 +41,37 @@
             display: flex;
             animation: slideShow 25s infinite;
         }
- 
+
         .slider img {
             width: 100%;
             height: 100%;
             flex-shrink: 0;
             object-fit: cover;
         }
- 
+
         /* Sliding Animation */
         @keyframes slideShow {
             0% {
                 transform: translateX(0%);
             }
- 
+
             25% {
                 transform: translateX(-100%);
             }
- 
+
             50% {
                 transform: translateX(-200%);
             }
- 
+
             75% {
                 transform: translateX(-300%);
             }
- 
+
             100% {
                 transform: translateX(0%);
             }
         }
- 
+
         .hero-text {
             position: absolute;
             top: 50%;
@@ -80,18 +79,18 @@
             transform: translate(-50%, -50%);
             z-index: 1;
         }
- 
+
         .hero h1 {
             font-family: 'Merriweather', serif;
             font-size: 48px;
             margin-bottom: 10px;
         }
- 
+
         .hero p {
             font-size: 18px;
             margin-bottom: 20px;
         }
- 
+
         .btn-primary {
             background-color: #506d8f;
             color: white;
@@ -102,11 +101,85 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
- 
+
         .btn-primary:hover {
             background-color: #405572;
         }
- 
+
+        .auth-buttons {
+            margin-top: 20px;
+        }
+
+        .auth-buttons .btn {
+            padding: 12px 30px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .auth-buttons .btn-primary {
+            background-color: #506d8f;
+            color: white;
+            border: none;
+        }
+
+        .auth-buttons .btn-primary:hover {
+            background-color: #405572;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .auth-buttons .btn-secondary {
+            background-color: #6a8caf;
+            color: white;
+            border: none;
+        }
+        .auth-buttons .btn-secondary:hover {
+            background-color: #506d8f;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }   
+        
+    #loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(255, 255, 255, 0.9);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        opacity: 1; /* Ensure it's fully visible initially */
+        transition: opacity 0.5s ease; /* Smooth fade-out transition */
+    }
+
+    .loading-content {
+        text-align: center;
+    }
+
+    .spinner {
+        width: 50px;
+        height: 50px;
+        border: 5px solid #ccc;
+        border-top: 5px solid #506d8f;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+
         /* Footer */
         .footer {
             text-align: center;
@@ -116,7 +189,6 @@
         }
     </style>
 </head>
- 
 <body>
     <!-- Loading Screen -->
     <div id="loading-screen">
@@ -125,7 +197,7 @@
             <div class="spinner"></div>
         </div>
     </div>
- 
+
     <!-- Hero Section with Slideshow -->
     <section class="hero">
         <div class="slider">
@@ -138,45 +210,22 @@
             <h1>SMARTSTAY</h1>
             <h1>Explore Exceptional Stays</h1>
             <p>Your perfect getaway, just a few clicks away.</p>
-        </div>
-    </section>
- 
-    <!-- Modal for Login/Signup -->
-    <div class="modal fade" id="loginRegisterModal" tabindex="-1" aria-labelledby="loginRegisterModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="loginRegisterModalLabel">Login or Register</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-center">
-                    <p>Welcome to SmartStay! Please log in or register to continue.</p>
-                    <div class="d-flex justify-content-center gap-3">
-                        <a th:href="@{/users/login}" class="btn btn-primary">Login</a>
-                        <a th:href="@{/users/register}" class="btn btn-secondary">Register</a>
-                    </div>
-                </div>
+            <div class="auth-buttons">
+                <a th:href="@{/users/login}" class="btn btn-primary">Login</a>
+                <a th:href="@{/users/register}" class="btn btn-secondary">Register</a>
             </div>
         </div>
-    </div>
- 
+    </section>
+
     <!-- Footer -->
     <footer class="footer">
         <p>&copy; 2025 SmartStay. All rights reserved.</p>
     </footer>
- 
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
- 
+
     <script>
-        // Show the modal after 2 seconds
-        window.addEventListener('load', function () {
-            setTimeout(function () {
-                const loginRegisterModal = new bootstrap.Modal(document.getElementById('loginRegisterModal'));
-                loginRegisterModal.show();
-            }, 2500); // 2 seconds delay
-        });
- 
         // Loading Screen Fade Out
         window.addEventListener('load', function () {
             setTimeout(function () {
@@ -185,11 +234,9 @@
                 loadingScreen.style.transition = 'opacity 0.5s ease'; // Smooth transition
                 setTimeout(() => {
                     loadingScreen.style.display = 'none'; // Completely hide the loading screen
-                }, 1000); // Wait for the fade-out transition to complete
-            }, 500); // 0.5 seconds delay
+                }, 2000); // Wait for the fade-out transition to complete
+            }, 1000); // 1 second delay
         });
     </script>
 </body>
- 
 </html>
- 
