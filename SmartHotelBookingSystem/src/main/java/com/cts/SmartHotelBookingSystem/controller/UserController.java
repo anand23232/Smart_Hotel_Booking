@@ -43,7 +43,7 @@ public String loginUser(@RequestParam String username, @RequestParam String pass
             case "manager":
                 return "redirect:/users/hotel-manager/dashboard"; // Redirect to hotel manager dashboard
             case "customer":
-                return "redirect:/users/guest/dashboard"; // Redirect to guest dashboard
+                return "redirect:/users/users/dashboard"; // Redirect to guest dashboard
             default:
                 model.addAttribute("error", "Invalid role assigned to the user.");
                 return "users/login"; // Redirect back to login with an error
@@ -82,9 +82,9 @@ public String registerUser(@ModelAttribute User user, RedirectAttributes redirec
         return "hotel-manager/dashboard"; // Maps to hotel-manager/dashboard.html
     }
 
-    @GetMapping("/guest/dashboard")
+    @GetMapping("/users/dashboard")
     public String guestDashboard() {
-        return "guest/dashboard"; // Maps to guest/dashboard.html
+        return "/users/dashboard"; // Maps to guest/dashboard.html
     }
 
     @GetMapping("/create")
