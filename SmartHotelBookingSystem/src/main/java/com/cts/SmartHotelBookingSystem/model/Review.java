@@ -4,24 +4,26 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "reviews")
 public class Review {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reviews_seq")
+    @SequenceGenerator(name = "reviews_seq", sequenceName = "reviews_seq", allocationSize = 1)
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
 
     @ManyToOne
     @JoinColumn(name = "hotel_id", nullable = false)
     private Hotel hotel;
 
-    @Column(nullable = false)
-    private int rating;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Column(nullable = false, length = 500)
-    private String comment;
+    private String comment; // Add the comment field
+
+    @Column(nullable = false)
+    private int rating;
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -40,14 +42,6 @@ public class Review {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public Hotel getHotel() {
         return hotel;
     }
@@ -56,12 +50,12 @@ public class Review {
         this.hotel = hotel;
     }
 
-    public int getRating() {
-        return rating;
+    public User getUser() {
+        return user;
     }
 
-    public void setRating(int rating) {
-        this.rating = rating;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getComment() {
@@ -70,6 +64,14 @@ public class Review {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 
     public LocalDateTime getCreatedAt() {
