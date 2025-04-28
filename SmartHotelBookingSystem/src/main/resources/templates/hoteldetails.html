@@ -257,7 +257,7 @@
             <h2>Leave a Review</h2>
             <form id="reviewForm" action="/hotels/submitReview" method="post">
                 <input type="hidden" name="hotelId" th:value="${hotel.id}">
-                <textarea name="content" placeholder="Write your review here..." required></textarea> <!-- Updated name to 'content' -->
+                <textarea name="content" placeholder="Write your review here..." required></textarea>
                 <div>
                     <label>Rating:</label>
                     <input type="radio" name="rating" value="1" required> 1
@@ -276,30 +276,37 @@
             $(document).ready(function () {
                 $('#reviewForm').on('submit', function (e) {
                     e.preventDefault(); // Prevent the default form submission
-    
+        
                     // Serialize the form data
                     const formData = $(this).serialize();
-    
+        
                     // Send the form data using AJAX
                     $.ajax({
                         url: '/hotels/submitReview',
                         type: 'POST',
                         data: formData,
                         success: function (response) {
-                            // Show the success message
-                            $('#successMessage').text(response).show();
-                            $('#errorMessage').hide();
+                            // Show a success alert message
+                            alert('Review submitted successfully!');
+        
+                            // Wait for 1 second and reload the page
+                            setTimeout(function () {
+                                window.location.reload(); // Reload the current page
+                            }, 1000); // 1000 milliseconds = 1 second
                         },
-                        error: function (xhr) {
-                            // Show the error message
-                            $('#errorMessage').text('An error occurred while submitting the review.').show();
-                            $('#successMessage').hide();
+                        error: function () {
+                            // Show an error alert message
+                            alert('An error occurred while submitting the review. Please try again.');
+        
+                            // Wait for 1 second and reload the page
+                            setTimeout(function () {
+                                window.location.reload(); // Reload the current page
+                            }, 1000); // 1000 milliseconds = 1 second
                         }
+                    });
                 });
             });
-        });
-    </script>
-
+        </script>
     <script>
         function updateBooking() {
             const checkIn = document.getElementById('check-in').value;
