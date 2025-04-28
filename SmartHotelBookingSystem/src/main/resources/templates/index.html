@@ -16,11 +16,7 @@
             margin: 0;
             padding: 0;
             color: #333;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
+        color: inherit;
         }
 
         /* Hero Section with Slideshow */
@@ -91,94 +87,78 @@
             margin-bottom: 20px;
         }
 
-        .btn-primary {
-            background-color: #506d8f;
+        .btn-primary, .btn-secondary {
+            background-color: #1062c0;
             color: white;
             padding: 12px 25px;
             font-size: 18px;
             border: none;
             border-radius: 25px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.3s;
+            animation: popIn 3s ease-out;
         }
 
-        .btn-primary:hover {
+        .btn-primary:hover, .btn-secondary:hover {
             background-color: #405572;
+            transform: scale(1.05);
         }
 
         .auth-buttons {
             margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
         }
 
-        .auth-buttons .btn {
-            padding: 12px 30px;
-            font-size: 16px;
-            font-weight: 600;
-            border-radius: 30px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .auth-buttons .btn-primary {
-            background-color: #506d8f;
-            color: white;
-            border: none;
+        @keyframes popIn {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
 
-        .auth-buttons .btn-primary:hover {
-            background-color: #405572;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 1; /* Ensure it's fully visible initially */
+            transition: opacity 0.5s ease; /* Smooth fade-out transition */
         }
 
-        .auth-buttons .btn-secondary {
-            background-color: #6a8caf;
-            color: white;
-            border: none;
+        .loading-content {
+            text-align: center;
         }
-        .auth-buttons .btn-secondary:hover {
-            background-color: #506d8f;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-        }   
-        
-    #loading-screen {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(255, 255, 255, 0.9);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
-        opacity: 1; /* Ensure it's fully visible initially */
-        transition: opacity 0.5s ease; /* Smooth fade-out transition */
-    }
 
-    .loading-content {
-        text-align: center;
-    }
-
-    .spinner {
-        width: 50px;
-        height: 50px;
-        border: 5px solid #ccc;
-        border-top: 5px solid #506d8f;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-        margin: 20px auto;
-    }
-
-    @keyframes spin {
-        0% {
-            transform: rotate(0deg);
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #ccc;
+            border-top: 5px solid #506d8f;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
         }
-        100% {
-            transform: rotate(360deg);
-        }
-    }
 
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
 
         /* Footer */
         .footer {
@@ -202,9 +182,11 @@
     <section class="hero">
         <div class="slider">
             <img th:src="@{/images/hotel14.jpg}" alt="Hotel 1">
-            <img th:src="@{/images/hotel2.jpg}" alt="Hotel 2">
+            <img th:src="@{/images/hotel22.jpg}" alt="Hotel 2">
             <img th:src="@{/images/hotel10.jpg}" alt="Hotel 3">
             <img th:src="@{/images/hotel5.jpg}" alt="Hotel 4">
+            <img th:src="@{/images/hotel20.jpg}" alt="Hotel 5">
+            <img th:src="@{/images/hotel21.jpg}" alt="Hotel 6">
         </div>
         <div class="hero-text">
             <h1>SMARTSTAY</h1>
