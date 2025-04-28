@@ -2,6 +2,7 @@ package com.cts.SmartHotelBookingSystem.controller;
 
 import com.cts.SmartHotelBookingSystem.model.Payment;
 import com.cts.SmartHotelBookingSystem.service.PaymentService;
+import com.razorpay.RazorpayException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +19,7 @@ public class PaymentController {
     @GetMapping
     public String getAllPayments(Model model) {
         List<Payment> payments = paymentService.getAllPayments();
-        model.addAttribute("payments", payments);
+       Attribute("payments", payments);
         return "payments"; // Maps to payments.html
     }
 
@@ -32,11 +33,19 @@ public class PaymentController {
     public String createPayment(@ModelAttribute Payment payment) {
         paymentService.savePayment(payment);
         return "redirect:/payments";
-    }
-
-    @GetMapping("/delete/{id}")
+   GetMapping("/delete/{id}")
     public String deletePayment(@PathVariable Long id) {
         paymentService.deletePayment(id);
         return "redirect:/payments";
+    }
+
+    @PostMapping("/create-order")
+    @ResponseBody
+    public String createOrder(@RequestParam int amount, @RequestParam String currency) {
+        try {
+            return paymentService.createOrder(amount, currency);
+        } catch (RazorpayException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
