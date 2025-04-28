@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${hotel.name}">Hotel Details</title>
@@ -245,17 +246,21 @@
         <!-- Submitted Reviews Section -->
         <div class="submitted-reviews">
             <h2>Reviews</h2>
+            <div th:if="${#lists.isEmpty(reviews)}">
+                <p>No reviews have been submitted for this hotel yet.</p>
+            </div>
             <div th:each="review : ${reviews}">
                 <div class="review">
                     <p class="reviewer" th:text="${review.reviewer}">Reviewer Name</p>
                     <p th:text="${review.content}">Review Content</p>
                     <p class="stars" th:utext="${'&#9733;'.repeat(review.rating)}"></p>
+                    <p><small th:text="${#temporals.format(review.createdAt, 'dd MMM yyyy HH:mm')}">Created At</small></p>
                 </div>
             </div>
         </div>
         <div class="review-box">
             <h2>Leave a Review</h2>
-            <form id="reviewForm" action="/hotels/submitReview" method="post">
+            <form id="reviewForm"  method="post">
                 <input type="hidden" name="hotelId" th:value="${hotel.id}">
                 <textarea name="content" placeholder="Write your review here..." required></textarea>
                 <div>
@@ -268,8 +273,8 @@
                 </div>
                 <button type="submit">Submit</button>
             </form>
-            <div id="successMessage" style="display: none; color: green;">Review submitted successfully!</div>
-            <div id="errorMessage" style="display: none; color: red;"></div>
+            <!-- Alert container -->
+            <div id="alertMessage" style="display: none; padding: 10px; margin-top: 10px; border-radius: 5px;"></div>
         </div>
         
         <script>
@@ -286,25 +291,32 @@
                         type: 'POST',
                         data: formData,
                         success: function (response) {
-                            // Show a success alert message
-                            alert('Review submitted successfully!');
-        
-                            // Wait for 1 second and reload the page
-                            setTimeout(function () {
-                                window.location.reload(); // Reload the current page
-                            }, 1000); // 1000 milliseconds = 1 second
+                            // Show a success message
+                            showAlert('Review submitted successfully!', 'green');
                         },
                         error: function () {
-                            // Show an error alert message
-                            alert('An error occurred while submitting the review. Please try again.');
-        
-                            // Wait for 1 second and reload the page
-                            setTimeout(function () {
-                                window.location.reload(); // Reload the current page
-                            }, 1000); // 1000 milliseconds = 1 second
+                            // Show an error message
+                            showAlert('An error occurred while submitting the review. Please try again.', 'red');
                         }
                     });
                 });
+        
+                // Function to show alert messages
+                function showAlert(message, color) {
+                    const alertBox = $('#alertMessage');
+                    alertBox.text(message);
+                    alertBox.css({
+                        display: 'block',
+                        backgroundColor: color,
+                        color: 'white',
+                        textAlign: 'center',
+                    });
+        
+                    // Fade out the alert after 3 seconds
+                    setTimeout(function () {
+                        alertBox.fadeOut();
+                    }, 3000);
+                }
             });
         </script>
     <script>

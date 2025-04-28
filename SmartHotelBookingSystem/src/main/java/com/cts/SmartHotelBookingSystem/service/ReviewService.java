@@ -24,9 +24,7 @@ public class ReviewService {
     }
 
     // Fetch reviews by hotel ID
-    public List<Review> getReviewsByHotelId(Long hotelId) {
-        return reviewRepository.findByHotelId(hotelId);
-    }
+    // Removed duplicate method definition
 
     // Fetch reviews by user ID
     public List<Review> getReviewsByUserId(Long userId) {
@@ -58,5 +56,10 @@ public class ReviewService {
     // Delete a review by its ID
     public void deleteReview(Long id) {
         reviewRepository.deleteById(id);
+    }
+    
+
+    public List<Review> getReviewsByHotelId(Long hotelId) {
+            return reviewRepository.findByHotelId(hotelId);
     }
 }

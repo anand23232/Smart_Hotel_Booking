@@ -20,9 +20,9 @@ public class HotelController {
 
     @Autowired
     private HotelService hotelService;
-
     @Autowired
-    private ReviewService reviewService;
+    private ReviewService reviewService; // Inject ReviewService
+    // Removed unused ReviewService field
 
     @Autowired
     private RoomService roomService; // Inject RoomService
@@ -63,7 +63,10 @@ public class HotelController {
         if (hotel == null) {
             throw new RuntimeException("Hotel not found with id: " + id); // Handle invalid ID
         }
+        List<Review> reviews = reviewService.getReviewsByHotelId(id);
         model.addAttribute("hotel", hotel);
+        model.addAttribute("reviews", reviews);
+
         return "hoteldetails"; // Render hoteldetails.html
     }
 
@@ -111,4 +114,13 @@ public class HotelController {
 
         return "Review submitted successfully!";
     }
+// Fetch and display reviews for a specific hotel
+@GetMapping("/{hotelId}/reviews")
+public String getHotelReviews(@PathVariable Long hotelId, Model model) {
+    // Fetch the reviews for the specific hotel
+    List<Review> reviews = reviewService.getReviewsByHotelId(hotelId);
+    model.addAttribute("reviews", reviews);
+
+    return "hotel-reviews"; // Return the Thymeleaf template name for reviews
+}
 }
