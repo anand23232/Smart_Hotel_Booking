@@ -14,7 +14,7 @@
             color: #333;
             width:100%;
         }
-
+ 
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -23,18 +23,18 @@
             background-color: #007BFF;
             color: white;
         }
-
+ 
         .navbar .hotel-name {
             font-size: 1.5em;
             font-weight: bold;
         }
-
+ 
         .navbar .date-selection {
             display: flex;
             gap: 10px;
             align-items: center;
         }
-
+ 
         .navbar .date-selection input,
         .navbar .date-selection select {
             padding: 8px;
@@ -42,7 +42,7 @@
             border-radius: 4px;
             font-size: 1em;
         }
-
+ 
         .navbar .date-selection button {
             padding: 8px 15px;
             background-color: #0056b3;
@@ -53,11 +53,11 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
-
+ 
         .navbar .date-selection button:hover {
             background-color: #003f8a;
         }
-
+ 
         .container {
             max-width: 900px;
             margin: 40px auto;
@@ -66,7 +66,7 @@
             border-radius: 12px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
         }
-
+ 
         .hotel-image {
             width: 100%;
             height: 400px;
@@ -74,30 +74,30 @@
             border-radius: 12px;
             margin-bottom: 20px;
         }
-
+ 
         .hotel-details {
             margin-top: 20px;
         }
-
+ 
         .hotel-details h1 {
             font-size: 2.5em;
             margin-bottom: 10px;
             color: #333;
         }
-
+ 
         .hotel-details p {
             margin: 10px 0;
             line-height: 1.8;
             font-size: 1.1em;
         }
-
+ 
         .hotel-details .price {
             font-size: 1.8em;
             color: #007BFF;
             margin: 20px 0;
             font-weight: bold;
         }
-
+ 
         /* Reviews Section */
         .submitted-reviews {
             margin-top: 40px;
@@ -106,40 +106,40 @@
             border-radius: 12px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
-
+ 
         .submitted-reviews h2 {
             font-size: 2em;
             margin-bottom: 20px;
             color: #333;
         }
-
+ 
         .submitted-reviews .review {
             margin-bottom: 20px;
             padding: 15px;
             border-bottom: 1px solid #ddd;
         }
-
+ 
         .submitted-reviews .review:last-child {
             border-bottom: none;
         }
-
+ 
         .submitted-reviews .review p {
             margin: 5px 0;
             line-height: 1.6;
             font-size: 1em;
         }
-
+ 
         .submitted-reviews .review .reviewer {
             font-weight: bold;
             color: #007BFF;
             font-size: 1.1em;
         }
-
+ 
         .submitted-reviews .review .stars {
             color: #FFD700;
             font-size: 1.3em;
         }
-
+ 
         /* Review Form */
         .review-box {
             margin-top: 40px;
@@ -148,13 +148,13 @@
             border-radius: 12px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
-
+ 
         .review-box h2 {
             font-size: 2em;
             margin-bottom: 20px;
             color: #333;
         }
-
+ 
         .review-box textarea {
             width: 100%;
             height: 120px;
@@ -165,7 +165,7 @@
             font-size: 1em;
             margin-bottom: 15px;
         }
-
+ 
        
     .review-box .rating {
         margin: 15px 0;
@@ -173,25 +173,25 @@
         justify-content: flex-start;
         gap: 5px; /* Add spacing between stars */
     }
-
+ 
     .review-box .rating label {
         font-size: 1.8em;
         color: #ccc;
         cursor: pointer;
         transition: color 0.3s ease;
     }
-
+ 
     .review-box .rating input {
         display: none;
     }
-
+ 
     .review-box .rating input:checked ~ label,
     .review-box .rating input:checked + label,
     .review-box .rating label:hover,
     .review-box .rating label:hover ~ label {
         color: #FFD700; /* Gold color for selected stars */
     }
-
+ 
         .review-box button {
             padding: 12px 25px;
             background-color: #007BFF;
@@ -203,7 +203,7 @@
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.3s ease;
         }
-
+ 
         .review-box button:hover {
             background-color: #0056b3;
             transform: translateY(-3px);
@@ -232,7 +232,7 @@
             <button type="button" onclick="updateBooking()">Update</button>
         </div>
     </div>
-
+ 
     <div class="container">
         <img th:src="@{/images/hotel{id}.jpg(id=${hotel.id})}" th:alt="${hotel.name}" class="hotel-image">
         <div class="hotel-details">
@@ -241,7 +241,7 @@
             <p><strong>Description:</strong> <span th:text="${hotel.description}">Hotel Description</span></p>
             <p class="price"><strong>Price:</strong> $<span th:text="${hotel.price}">Hotel Price</span> per night</p>
         </div>
-
+ 
         <!-- Submitted Reviews Section -->
         <div class="submitted-reviews">
             <h2>Reviews</h2>
@@ -253,7 +253,12 @@
                 </div>
             </div>
         </div>
+<<<<<<< HEAD
 
+=======
+ 
+        <!-- Review Form Section -->
+>>>>>>> 263d6b0f1595216cadf7d2b614e1e38718a8b7c3
         <div class="review-box">
             <h2>Leave a Review</h2>
             <form id="reviewForm" action="/hotels/submitReview" method="post">
@@ -272,6 +277,7 @@
             <div id="successMessage" style="display: none; color: green;">Review submitted successfully!</div>
             <div id="errorMessage" style="display: none; color: red;"></div>
         </div>
+<<<<<<< HEAD
         
         <script>
             $(document).ready(function () {
@@ -301,6 +307,10 @@
         });
     </script>
 
+=======
+    </div>
+ 
+>>>>>>> 263d6b0f1595216cadf7d2b614e1e38718a8b7c3
     <script>
         function updateBooking() {
             const checkIn = document.getElementById('check-in').value;
@@ -310,12 +320,12 @@
             /*<![CDATA[*/
             const hotelId = /*[[${hotel.id}]]*/ '';
             /*]]>*/
-    
+   
             if (!checkIn || !checkOut) {
                 alert('Please select both check-in and check-out dates.');
                 return;
             }
-    
+   
             // Redirect to the rooms page with query parameters
             const url = `/rooms?hotelId=${hotelId}&checkIn=${checkIn}&checkOut=${checkOut}&guests=${guests}&rooms=${rooms}`;
             window.location.href = url;

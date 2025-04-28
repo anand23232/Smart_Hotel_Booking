@@ -13,7 +13,7 @@
             background-color: #f4f4f9;
             color: #333;
         }
-
+ 
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -22,18 +22,18 @@
             background-color: #007BFF;
             color: white;
         }
-
+ 
         .navbar .hotel-name {
             font-size: 1.5em;
             font-weight: bold;
         }
-
+ 
         .navbar .date-selection {
             display: flex;
             gap: 10px;
             align-items: center;
         }
-
+ 
         .navbar .date-selection input,
         .navbar .date-selection select {
             padding: 8px;
@@ -41,7 +41,7 @@
             border-radius: 4px;
             font-size: 1em;
         }
-
+ 
         .navbar .date-selection button {
             padding: 8px 15px;
             background-color: #0056b3;
@@ -52,11 +52,11 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
-
+ 
         .navbar .date-selection button:hover {
             background-color: #003f8a;
         }
-
+ 
         .container {
             max-width: 900px;
             margin: 40px auto;
@@ -65,7 +65,7 @@
             border-radius: 12px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
         }
-
+ 
         .room-card {
             display: flex;
             gap: 20px;
@@ -76,35 +76,35 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             background-color: #f9f9f9;
         }
-
+ 
         .room-card img {
             width: 150px;
             height: 150px;
             object-fit: cover;
             border-radius: 8px;
         }
-
+ 
         .room-details {
             flex: 1;
         }
-
+ 
         .room-details h3 {
             margin: 0;
             font-size: 1.5em;
             color: #007BFF;
         }
-
+ 
         .room-details p {
             margin: 5px 0;
             line-height: 1.6;
         }
-
+ 
         .room-details .price {
             font-size: 1.2em;
             font-weight: bold;
             color: #333;
         }
-
+ 
         .room-details button {
             margin-top: 10px;
             padding: 8px 15px;
@@ -116,7 +116,7 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
-
+ 
         .room-details button:hover {
             background-color: #0056b3;
         }
@@ -144,7 +144,7 @@
             <button type="button" onclick="updateBooking()">Update</button>
         </div>
     </div>
-
+ 
     <div class="container">
         <h1>Available Rooms</h1>
         <div th:if="${rooms != null and !rooms.isEmpty()}">
@@ -162,16 +162,17 @@
             <p>No rooms available for the selected criteria.</p>
         </div>
     </div>
-
+ 
     <script>
         function updateBooking() {
             const checkIn = document.getElementById('check-in').value;
             const checkOut = document.getElementById('check-out').value;
             const guests = document.getElementById('guests').value;
             const rooms = document.getElementById('rooms').value;
-
+ 
             window.location.href = `/rooms?checkIn=${checkIn}&checkOut=${checkOut}&guests=${guests}&rooms=${rooms}`;
         }
     </script>
 </body>
 </html>
+ 
