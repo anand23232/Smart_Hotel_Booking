@@ -1,19 +1,16 @@
 package com.cts.SmartHotelBookingSystem.controller;
 
 import com.cts.SmartHotelBookingSystem.model.Hotel;
+import com.cts.SmartHotelBookingSystem.model.Review;
+import com.cts.SmartHotelBookingSystem.model.User;
 import com.cts.SmartHotelBookingSystem.service.HotelService;
+import com.cts.SmartHotelBookingSystem.service.ReviewService;
+import com.cts.SmartHotelBookingSystem.service.RoomService; // Import RoomService
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import com.cts.SmartHotelBookingSystem.model.Review; // Import the Review class
-import com.cts.SmartHotelBookingSystem.service.ReviewService; // Import the ReviewService class
-
-import com.cts.SmartHotelBookingSystem.model.User;
-
-
-import jakarta.servlet.http.HttpSession;
-
 
 import java.util.List;
 
@@ -23,6 +20,12 @@ public class HotelController {
 
     @Autowired
     private HotelService hotelService;
+
+    @Autowired
+    private ReviewService reviewService;
+
+    @Autowired
+    private RoomService roomService; // Inject RoomService
 
     // Fetch and display all hotels
     @GetMapping
@@ -64,41 +67,48 @@ public class HotelController {
         return "hoteldetails"; // Render hoteldetails.html
     }
 
+    // Search hotels by keyword
     @GetMapping("/search")
     @ResponseBody
     public List<Hotel> searchHotels(@RequestParam("keyword") String keyword) {
         return hotelService.searchHotels(keyword);
     }
-    @Autowired
-    private ReviewService reviewService;
 
+    // Submit a review for a hotel
     @PostMapping("/submitReview")
     @ResponseBody
     public String submitReview(@RequestParam Long hotelId,
-                               @RequestParam String review,
+                               @RequestParam String content,
                                @RequestParam int rating,
                                HttpSession session) {
         // Retrieve the logged-in user from the session
         User loggedInUser = (User) session.getAttribute("loggedInUser");
-    
+
         if (loggedInUser == null) {
-            // If no user is logged in, return an error message
             return "User not logged in. Please log in to submit a review.";
         }
-    
+
+        if (content == null || content.trim().isEmpty()) {
+            return "Comment cannot be empty.";
+        }
+
+        System.out.println("Content received in submitReview: " + content); // Debugging line
+
         // Create and save the review
         Review newReview = new Review();
-        Hotel hotel = hotelService.getHotelById(hotelId); // Fetch the Hotel object using hotelId
+        Hotel hotel = hotelService.getHotelById(hotelId);
         if (hotel == null) {
-            return "Hotel not found with id: " + hotelId; // Handle invalid hotelId
+            return "Hotel not found with id: " + hotelId;
         }
-        newReview.setHotel(hotel); // Set the fetched Hotel object
-        newReview.setUser(loggedInUser); // Use the logged-in user's details
-        newReview.setComment(review);
+        newReview.setHotel(hotel);
+        newReview.setUser(loggedInUser);
+        newReview.setContent(content);
         newReview.setRating(rating);
-    
-        reviewService.saveReview(newReview);
-    
-        // Return a success message
+
+        System.out.println("Review object before saving: " + newReview); // Debugging line
+
+        roomService.saveReview(newReview); // Use RoomService to save the review
+
         return "Review submitted successfully!";
-                               }}
+    }
+}

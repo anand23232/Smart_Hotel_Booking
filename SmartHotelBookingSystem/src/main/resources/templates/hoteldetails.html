@@ -257,7 +257,7 @@
             <h2>Leave a Review</h2>
             <form id="reviewForm" action="/hotels/submitReview" method="post">
                 <input type="hidden" name="hotelId" th:value="${hotel.id}">
-                <textarea name="review" placeholder="Write your review here..." required></textarea>
+                <textarea name="content" placeholder="Write your review here..." required></textarea> <!-- Updated name to 'content' -->
                 <div>
                     <label>Rating:</label>
                     <input type="radio" name="rating" value="1" required> 1
