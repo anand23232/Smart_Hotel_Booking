@@ -16,5 +16,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     // Custom query to find users by name (case-insensitive)
     List<User> findByNameIgnoreCaseContaining(String name);
 
+    // Custom query to find users by role
+    List<User> findByRole(String role);
 // Removed nested UserRepository interface to avoid conflict
 }

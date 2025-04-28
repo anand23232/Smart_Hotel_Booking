@@ -34,6 +34,14 @@ public class User {
 
     private String name;
 
+    @Column(nullable = false)
+    @NotBlank(message = "Phone number is required")
+    private String phonenumber; // New field for phone number
+
+    @Column(nullable = false)
+    @NotBlank(message = "Role is required")
+    private String role; // New field for role
+
     // Getters and Setters
     public Long getId() {
         return id;
@@ -75,6 +83,22 @@ public class User {
         this.name = name;
     }
 
+    public String getPhonenumber() {
+        return phonenumber;
+    }
+
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -82,6 +106,8 @@ public class User {
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
+                ", phonenumber='" + phonenumber + '\'' +
+                ", role='" + role + '\'' +
                 '}';
     }
 }

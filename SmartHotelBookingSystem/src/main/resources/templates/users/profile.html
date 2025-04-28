@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guest Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,45 +13,95 @@
             padding: 0;
             background-color: #f4f4f9;
         }
+
         .profile-container {
-            max-width: 600px;
+            max-width: 800px;
             margin: 50px auto;
             background: #fff;
-            padding: 20px;
-            border-radius: 8px;
+            padding: 30px;
+            border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         .profile-header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
+
         .profile-header h1 {
             margin: 0;
-            font-size: 24px;
+            font-size: 28px;
             color: #333;
         }
+
         .profile-details {
-            line-height: 1.8;
+            margin-bottom: 20px;
         }
+
         .profile-details label {
             font-weight: bold;
             color: #555;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        .profile-details p {
-            margin: 5px 0 15px;
+
+        .profile-details input,
+        .profile-details textarea,
+        .profile-details select {
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+            font-size: 14px;
             color: #333;
         }
+
+        .profile-details input[readonly],
+        .profile-details textarea[readonly],
+        .profile-details select[disabled] {
+            background-color: #f8f9fa;
+            border: none;
+            color: #555;
+        }
+
+        .btn-save {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-save:hover {
+            background-color: #218838;
+        }
+
+        .btn-cancel {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .btn-cancel:hover {
+            background-color: #c82333;
+        }
+
         .btn-edit {
-            display: block;
-            width: 100%;
-            padding: 10px;
             background-color: #007bff;
             color: #fff;
-            text-align: center;
-            text-decoration: none;
+            border: none;
+            padding: 10px 20px;
             border-radius: 5px;
-            margin-top: 20px;
+            transition: background-color 0.3s;
         }
+
         .btn-edit:hover {
             background-color: #0056b3;
         }
@@ -58,21 +110,53 @@
 <body>
     <div class="profile-container">
         <div class="profile-header">
-            <h1>Guest Profile</h1>
+            <h1><i class="fas fa-user-circle"></i> Guest Profile</h1>
         </div>
-        <div class="profile-details">
-            <label>Full Name:</label>
-            <p>{{ guest.fullName }}</p>
-            <label>Email:</label>
-            <p>{{ guest.email }}</p>
-            <label>Phone Number:</label>
-            <p>{{ guest.phoneNumber }}</p>
-            <label>Address:</label>
-            <p>{{ guest.address }}</p>
-            <label>Membership Status:</label>
-            <p>{{ guest.membershipStatus }}</p>
-        </div>
-        <a href="/guest/edit-profile" class="btn-edit">Edit Profile</a>
+
+        <!-- Profile Form -->
+        <form action="/guest/update-profile" method="post">
+            <div class="profile-details">
+                <label for="fullName"><i class="fas fa-user"></i> Full Name</label>
+                <input type="text" id="fullName" name="fullName" value="{{ guest.fullName }}" readonly>
+
+                <label for="email"><i class="fas fa-envelope"></i> Email</label>
+                <input type="email" id="email" name="email" value="{{ guest.email }}" readonly>
+
+                <label for="phoneNumber"><i class="fas fa-phone"></i> Phone Number</label>
+                <input type="text" id="phoneNumber" name="phoneNumber" value="{{ guest.phoneNumber }}" readonly>
+
+                
+            </div>
+
+            <!-- Buttons -->
+            <div class="d-flex justify-content-between">
+                <button type="button" class="btn-edit" onclick="enableEditing()">Edit</button>
+                <div>
+                    <button type="submit" class="btn-save" style="display: none;">Save</button>
+                    <button type="button" class="btn-cancel" style="display: none;" onclick="cancelEditing()">Cancel</button>
+                </div>
+            </div>
+        </form>
     </div>
+
+    <script>
+        function enableEditing() {
+            // Enable all input fields for editing
+            document.querySelectorAll('#fullName, #email, #phoneNumber, #address, #membershipStatus').forEach(field => {
+                field.removeAttribute('readonly');
+                field.removeAttribute('disabled');
+            });
+
+            // Show Save and Cancel buttons, hide Edit button
+            document.querySelector('.btn-save').style.display = 'inline-block';
+            document.querySelector('.btn-cancel').style.display = 'inline-block';
+            document.querySelector('.btn-edit').style.display = 'none';
+        }
+
+        function cancelEditing() {
+            // Reload the page to reset the form
+            location.reload();
+        }
+    </script>
 </body>
-</html></div>
+</html>

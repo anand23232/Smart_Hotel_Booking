@@ -1,103 +1,141 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manager Dashboard</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-        }
-
-        header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 1rem;
-            text-align: center;
-        }
-
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            padding: 2rem;
-        }
-
-        .card {
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin: 1rem;
-            padding: 1.5rem;
-            width: 300px;
-            text-align: center;
-        }
-
-        .card h3 {
-            margin: 0.5rem 0;
-            color: #333;
-        }
-
-        .card p {
-            color: #666;
-        }
-
-        .card a {
-            display: inline-block;
-            margin-top: 1rem;
-            padding: 0.5rem 1rem;
-            background-color: #4CAF50;
-            color: white;
-            text-decoration: none;
-            border-radius: 4px;
-        }
-
-        .card a:hover {
-            background-color: #45a049;
-        }
-
-        footer {
-            text-align: center;
-            padding: 1rem;
-            background-color: #333;
-            color: white;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
+    <title>Hotel Manager Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
 </head>
 <body>
-    <header>
-        <h1>Hotel Manager Dashboard</h1>
-    </header>
-    <div class="container">
-        <div class="card">
-            <h3>Manage Bookings</h3>
-            <p>View and manage all hotel bookings.</p>
-            <a href="/manage-bookings">Go to Bookings</a>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Hotel Manager Dashboard</h1>
+        
+        <!-- Add Room Button -->
+        <div class="d-flex justify-content-end mb-3">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addRoomModal">Add New Room</button>
         </div>
-        <div class="card">
-            <h3>Manage Rooms</h3>
-            <p>Update room availability and details.</p>
-            <a href="/manage-rooms">Go to Rooms</a>
-        </div>
-        <div class="card">
-            <h3>View Reports</h3>
-            <p>Analyze hotel performance and statistics.</p>
-            <a href="/view-reports">Go to Reports</a>
-        </div>
-        <div class="card">
-            <h3>Manage Staff</h3>
-            <p>View and manage staff information.</p>
-            <a href="/manage-staff">Go to Staff</a>
+
+        <!-- Rooms Table -->
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Room Number</th>
+                    <th>Type</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dynamic rows rendered using Thymeleaf -->
+                <tr th:each="room, iterStat : ${rooms}">
+                    <td th:text="${iterStat.index + 1}"></td>
+                    <td th:text="${room.roomNumber}"></td>
+                    <td th:text="${room.type}"></td>
+                    <td th:text="${room.price}"></td>
+                    <td th:text="${room.status}"></td>
+                    <td>
+                        <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editRoomModal" 
+                                th:attr="data-room-id=${room.id}">Edit</button>
+                        <button class="btn btn-danger btn-sm" th:attr="data-room-id=${room.id}">Delete</button>
+                        <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewReviewsModal" 
+                                th:attr="data-room-id=${room.id}" th:onclick="'loadReviews(' + ${room.id} + ')'">View Reviews</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Add Room Modal -->
+    <div class="modal fade" id="addRoomModal" tabindex="-1" aria-labelledby="addRoomModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addRoomModalLabel">Add New Room</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/rooms/add}" method="post">
+                        <div class="mb-3">
+                            <label for="roomNumber" class="form-label">Room Number</label>
+                            <input type="text" class="form-control" id="roomNumber" name="roomNumber" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="roomType" class="form-label">Room Type</label>
+                            <input type="text" class="form-control" id="roomType" name="type" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="roomPrice" class="form-label">Price</label>
+                            <input type="number" class="form-control" id="roomPrice" name="price" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="roomImageUrl" class="form-label">Image URL</label>
+                            <input type="url" class="form-control" id="roomImageUrl" name="imageUrl" placeholder="Enter image URL" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="roomStatus" class="form-label">Status</label>
+                            <select class="form-select" id="roomStatus" name="status" required>
+                                <option value="Available">Available</option>
+                                <option value="Occupied">Occupied</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Room</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
-    <footer>
-        <p>&copy; 2023 Smart Hotel Booking System</p>
-    </footer>
+
+    <!-- View Reviews Modal -->
+    <div class="modal fade" id="viewReviewsModal" tabindex="-1" aria-labelledby="viewReviewsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewReviewsModalLabel">Room Reviews</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="reviewsContainer">
+                        <!-- Reviews will be dynamically loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function loadReviews(roomId) {
+            fetch(`/rooms/${roomId}/reviews`)
+                .then(response => response.json())
+                .then(reviews => {
+                    const reviewsContainer = document.getElementById('reviewsContainer');
+                    reviewsContainer.innerHTML = ''; // Clear existing reviews
+
+                    reviews.forEach(review => {
+                        const reviewDiv = document.createElement('div');
+                        reviewDiv.classList.add('mb-3');
+
+                        reviewDiv.innerHTML = `
+                            <p><strong>User:</strong> ${review.userName}</p>
+                            <p><strong>Review:</strong> ${review.content}</p>
+                            <form action="/reviews/reply" method="post">
+                                <input type="hidden" name="reviewId" value="${review.id}">
+                                <div class="mb-3">
+                                    <label for="replyContent-${review.id}" class="form-label">Reply:</label>
+                                    <textarea class="form-control" id="replyContent-${review.id}" name="replyContent" rows="2" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-sm">Reply</button>
+                            </form>
+                            <hr>
+                        `;
+
+                        reviewsContainer.appendChild(reviewDiv);
+                    });
+                })
+                .catch(error => console.error('Error loading reviews:', error));
+        }
+    </script>
 </body>
-</html></div></html>
+</html>
