@@ -254,28 +254,52 @@
             </div>
         </div>
 
-        <!-- Review Form Section -->
         <div class="review-box">
             <h2>Leave a Review</h2>
-            <form th:action="@{/submitReview}" method="post">
-                <input type="hidden" th:name="hotelId" th:value="${hotel.id}">
+            <form id="reviewForm" action="/hotels/submitReview" method="post">
+                <input type="hidden" name="hotelId" th:value="${hotel.id}">
                 <textarea name="review" placeholder="Write your review here..." required></textarea>
-                <div class="rating">
-                    <input type="radio" id="star1" name="rating" value="1" required>
-                    <label for="star1">&#9733;</label>
-                    <input type="radio" id="star2" name="rating" value="2">
-                    <label for="star2">&#9733;</label>
-                    <input type="radio" id="star3" name="rating" value="3">
-                    <label for="star3">&#9733;</label>
-                    <input type="radio" id="star4" name="rating" value="4">
-                    <label for="star4">&#9733;</label>
-                    <input type="radio" id="star5" name="rating" value="5">
-                    <label for="star5">&#9733;</label>
+                <div>
+                    <label>Rating:</label>
+                    <input type="radio" name="rating" value="1" required> 1
+                    <input type="radio" name="rating" value="2"> 2
+                    <input type="radio" name="rating" value="3"> 3
+                    <input type="radio" name="rating" value="4"> 4
+                    <input type="radio" name="rating" value="5"> 5
                 </div>
-                <button type="submit">Submit Review</button>
+                <button type="submit">Submit</button>
             </form>
+            <div id="successMessage" style="display: none; color: green;">Review submitted successfully!</div>
+            <div id="errorMessage" style="display: none; color: red;"></div>
         </div>
-    </div>
+        
+        <script>
+            $(document).ready(function () {
+                $('#reviewForm').on('submit', function (e) {
+                    e.preventDefault(); // Prevent the default form submission
+    
+                    // Serialize the form data
+                    const formData = $(this).serialize();
+    
+                    // Send the form data using AJAX
+                    $.ajax({
+                        url: '/hotels/submitReview',
+                        type: 'POST',
+                        data: formData,
+                        success: function (response) {
+                            // Show the success message
+                            $('#successMessage').text(response).show();
+                            $('#errorMessage').hide();
+                        },
+                        error: function (xhr) {
+                            // Show the error message
+                            $('#errorMessage').text('An error occurred while submitting the review.').show();
+                            $('#successMessage').hide();
+                        }
+                });
+            });
+        });
+    </script>
 
     <script>
         function updateBooking() {

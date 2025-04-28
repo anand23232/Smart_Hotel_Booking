@@ -4,6 +4,7 @@ import com.cts.SmartHotelBookingSystem.model.Review;
 import com.cts.SmartHotelBookingSystem.service.ReviewService;
 import com.cts.SmartHotelBookingSystem.service.HotelService;
 import com.cts.SmartHotelBookingSystem.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

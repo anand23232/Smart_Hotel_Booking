@@ -8,9 +8,7 @@ import java.util.List;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
-    // Custom query to find reviews by hotel ID
     List<Review> findByHotelId(Long hotelId);
-
-    // Custom query to find reviews by user ID
     List<Review> findByUserId(Long userId);
+    boolean existsByUserIdAndHotelId(Long userId, Long hotelId);
 }

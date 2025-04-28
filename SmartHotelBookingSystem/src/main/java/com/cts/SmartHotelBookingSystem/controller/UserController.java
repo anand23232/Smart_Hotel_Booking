@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -24,37 +25,53 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String loginPage(@RequestParam(value = "success", required = false) String success, Model model) {
+    public String loginPage(@RequestParam(value = "success", required = false) String success, 
+                            @RequestParam(value = "logout", required = false) String logout, 
+                            Model model) {
         if (success != null) {
             model.addAttribute("success", success);
+        }
+        if (logout != null) {
+            model.addAttribute("message", "You have been logged out successfully.");
         }
         return "users/login"; // Maps to login.html
     }
 
     @PostMapping("/login")
-public String loginUser(@RequestParam String username, @RequestParam String password, Model model) {
-    User user = userService.findByUsername(username);
-    if (user != null && userService.validatePassword(user, password)) {
-        // Check the user's role and redirect accordingly
-        String role = user.getRole().toLowerCase();
-        switch (role) {
-            case "admin":
-                return "redirect:/users/admin/dashboard"; // Redirect to admin dashboard
-            case "manager":
-                return "redirect:/users/hotel-manager/dashboard"; // Redirect to hotel manager dashboard
-            case "customer":
-                return "redirect:/users/users/dashboard"; // Redirect to guest dashboard
-            default:
-                model.addAttribute("error", "Invalid role assigned to the user.");
-                return "users/login"; // Redirect back to login with an error
-        }
-    } else {
-        // Login failed, show error message
-        model.addAttribute("error", "Invalid username or password");
-        return "users/login";
-    }
-}
+    public String loginUser(@RequestParam String username, 
+                            @RequestParam String password, 
+                            HttpSession session, 
+                            Model model) {
+        User user = userService.findByUsername(username);
+        if (user != null && userService.validatePassword(user, password)) {
+            // Store the logged-in user in the session
+            session.setAttribute("loggedInUser", user);
 
+            // Check the user's role and redirect accordingly
+            String role = user.getRole().toLowerCase();
+            switch (role) {
+                case "admin":
+                    return "redirect:/users/admin/dashboard"; // Redirect to admin dashboard
+                case "manager":
+                    return "redirect:/users/hotel-manager/dashboard"; // Redirect to hotel manager dashboard
+                case "customer":
+                    return "redirect:/users/users/dashboard"; // Redirect to guest dashboard
+                default:
+                    model.addAttribute("error", "Invalid role assigned to the user.");
+                    return "users/login"; // Redirect back to login with an error
+            }
+        } else {
+            // Login failed, show error message
+            model.addAttribute("error", "Invalid username or password");
+            return "users/login";
+        }
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate(); // Invalidate the session to log out the user
+        return "redirect:/users/login?logout=true"; // Redirect to the login page with a logout message
+    }
 
     @GetMapping("/register")
     public String showRegisterPage() {
@@ -62,15 +79,15 @@ public String loginUser(@RequestParam String username, @RequestParam String pass
     }
 
     @PostMapping("/register")
-public String registerUser(@ModelAttribute User user, RedirectAttributes redirectAttributes) {
-    if (userService.isUsernameOrEmailTaken(user.getUsername(), user.getEmail())) {
-        redirectAttributes.addFlashAttribute("error", "Username or Email is already taken. Please choose another.");
-        return "redirect:/users/register"; // Redirect back to the registration page with an error
+    public String registerUser(@ModelAttribute User user, RedirectAttributes redirectAttributes) {
+        if (userService.isUsernameOrEmailTaken(user.getUsername(), user.getEmail())) {
+            redirectAttributes.addFlashAttribute("error", "Username or Email is already taken. Please choose another.");
+            return "redirect:/users/register"; // Redirect back to the registration page with an error
+        }
+        userService.saveUser(user); // Save the user using the UserService
+        redirectAttributes.addFlashAttribute("success", "Account created successfully! Please log in.");
+        return "redirect:/users/login"; // Redirect to the login page after successful registration
     }
-    userService.saveUser(user); // Save the user using the UserService
-    redirectAttributes.addFlashAttribute("success", "Account created successfully! Please log in.");
-    return "redirect:/users/login"; // Redirect to the login page after successful registration
-}
 
     @GetMapping("/admin/dashboard")
     public String adminDashboard() {

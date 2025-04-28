@@ -43,7 +43,7 @@
         <div th:if="${success}" class="alert alert-success" role="alert" id="success-message" th:text="${success}"></div>
         
         <!-- Display error message dynamically -->
-        <div th:if="${error}" class="error-message" th:text="${error}"></div>
+        <div th:if="${error}" class="alert alert-danger" role="alert" id="error-message" th:text="${error}"></div>
         
         <form th:action="@{/users/login}" method="post">
             <div class="mb-3">

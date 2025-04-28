@@ -1,6 +1,7 @@
 package com.cts.SmartHotelBookingSystem.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Review {
@@ -16,8 +17,19 @@ public class Review {
     @JoinColumn(name = "hotel_id", nullable = false)
     private Hotel hotel;
 
+    @Column(nullable = false)
     private int rating;
+
+    @Column(nullable = false, length = 500)
     private String comment;
+
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = LocalDateTime.now();
+    }
 
     // Getters and Setters
     public Long getId() {
@@ -58,5 +70,13 @@ public class Review {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }
