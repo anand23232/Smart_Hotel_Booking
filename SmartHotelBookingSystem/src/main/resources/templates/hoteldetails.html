@@ -3,7 +3,7 @@
 <head>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width:100%; initial-scale=1.0">
     <title th:text="${hotel.name}">Hotel Details</title>
     <style>
         /* General Styles */
@@ -228,13 +228,39 @@
             background-color: #0056b3;
             transform: translateY(-3px);
         }
+
+        .view-rooms-btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #007BFF; /* Primary blue color */
+            color: white;
+            text-decoration: none;
+            font-size: 1em;
+            font-weight: bold;
+            border-radius: 8px;
+            text-align: center;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+        }
+
+        .view-rooms-btn:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+            transform: translateY(-3px); /* Slight lift effect */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Enhance shadow on hover */
+        }
+
+        .view-rooms-btn:active {
+            background-color: #003f8a; /* Even darker blue on click */
+            transform: translateY(0); /* Reset lift effect */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Reset shadow */
+        }
     </style>
 </head>
 <body>
     <!-- Navbar -->
     <div class="navbar">
         <div class="hotel-name" th:text="${hotel.name}">Hotel Name</div>
-        <div class="date-selection">
+        <!-- <div class="date-selection">
             <input type="date" id="check-in" name="check-in" placeholder="Check-in Date">
             <input type="date" id="check-out" name="check-out" placeholder="Check-out Date">
             <select id="guests" name="guests">
@@ -250,9 +276,9 @@
                 <option value="4">4 Rooms</option>
             </select>
             <button type="button" onclick="updateBooking()">Update</button>
-        </div>
+        </div> -->
     </div>
- 
+  
     <div class="container">
         <img th:src="@{/images/hotel{id}.jpg(id=${hotel.id})}" th:alt="${hotel.name}" class="hotel-image">
         <div class="hotel-details">
@@ -260,6 +286,8 @@
             <p><strong>Location:</strong> <span th:text="${hotel.location}">Hotel Location</span></p>
             <p><strong>Description:</strong> <span th:text="${hotel.description}">Hotel Description</span></p>
             <p class="price"><strong>Price:</strong> $<span th:text="${hotel.price}">Hotel Price</span> per night</p>
+            <!-- Styled View Rooms Button -->
+            <a th:href="@{/rooms(hotelId=${hotel.id})}" class="btn btn-primary view-rooms-btn">View Rooms</a>
         </div>
  
         <!-- Submitted Reviews Section -->

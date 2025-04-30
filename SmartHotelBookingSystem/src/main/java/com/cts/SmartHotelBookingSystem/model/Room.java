@@ -10,23 +10,26 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "ROOMNUMBER", nullable = false)
+    @Column(name = "ROOMNUMBER", nullable = false) // Match the database column name
     private String roomNumber;
 
-    @Column(name = "TYPE", nullable = false)
+    @Column(name = "TYPE", nullable = false) // Match the database column name
     private String type;
 
-    @Column(name = "PRICE", nullable = false)
+    @Column(name = "PRICE", nullable = false) // Match the database column name
     private Double price;
 
-    @Column(name = "CAPACITY", nullable = false)
-    private Integer capacity; // Ensure this matches the database column
+    @Column(name = "CAPACITY", nullable = false) // Match the database column name
+    private Integer capacity;
 
-    @Column(name = "AVAILABLEROOMS", nullable = false)
+    @Column(name = "AVAILABLEROOMS", nullable = false) // Match the database column name
     private Integer availableRooms;
 
-    @ManyToOne
-    @JoinColumn(name = "HOTEL_ID", nullable = false)
+    @Column(name = "IMAGE_URL", nullable = false) // Match the database column name
+    private String imageUrl;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "HOTEL_ID", nullable = false) // Match the database column name
     private Hotel hotel;
 
     // Getters and Setters
@@ -78,6 +81,14 @@ public class Room {
         this.availableRooms = availableRooms;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public Hotel getHotel() {
         return hotel;
     }
@@ -95,6 +106,7 @@ public class Room {
                 ", price=" + price +
                 ", capacity=" + capacity +
                 ", availableRooms=" + availableRooms +
+                ", imageUrl='" + imageUrl + '\'' +
                 ", hotel=" + hotel +
                 '}';
     }

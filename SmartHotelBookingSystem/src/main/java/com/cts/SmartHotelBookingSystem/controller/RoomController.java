@@ -8,29 +8,55 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+
 @Controller
 @RequestMapping("/rooms")
 public class RoomController {
+
     @Autowired
     private RoomService roomService;
 
     @Autowired
     private HotelService hotelService;
 
+    @PostMapping("/add")
+    public String addRoom(@ModelAttribute Room room, RedirectAttributes redirectAttributes) {
+        if (room.getHotel() == null || hotelService.getHotelById(room.getHotel().getId()) == null) {
+            redirectAttributes.addFlashAttribute("error", "Invalid Hotel ID");
+            return "redirect:/rooms/create";
+        }
+        roomService.saveRoom(room);
+        redirectAttributes.addFlashAttribute("success", "Room added successfully!");
+        return "redirect:/rooms";
+    }
+
     @GetMapping
-    public String getAllRooms(Model model) {
-        List<Room> rooms = roomService.getAllRooms();
+    public String viewRooms(@RequestParam(required = false) Long hotelId, Model model) {
+        if (hotelId == null) {
+            model.addAttribute("error", "Hotel ID is required to view rooms.");
+            return "error"; // Render an error page if hotelId is missing
+        }
+
+        // Fetch rooms for the specified hotel
+        List<Room> rooms = roomService.getRoomsByHotelId(hotelId);
         model.addAttribute("rooms", rooms);
-        return "rooms"; // Maps to rooms.html
+
+        // Fetch the hotel details and add to the model
+        Hotel hotel = hotelService.getHotelById(hotelId);
+        model.addAttribute("hotel", hotel);
+
+        return "rooms"; // Render rooms.html
     }
 
     @GetMapping("/create")
     public String createRoomForm(Model model) {
-        model.addAttribute("hotels", hotelService.getAllHotels());
-        model.addAttribute("room", new Room());
-        return "create-room"; // Maps to create-room.html
+        List<Hotel> hotels = hotelService.getAllHotels(); // Fetch all hotels
+        model.addAttribute("hotels", hotels); // Add hotels to the model
+        model.addAttribute("room", new Room()); // Add an empty Room object to the model
+        return "create-room"; // Ensure this matches the name of your Thymeleaf template
     }
 
     @PostMapping("/create")
@@ -45,41 +71,35 @@ public class RoomController {
         return "redirect:/rooms";
     }
 
-@GetMapping("/search")
-public String getRooms(
-        @RequestParam(required = false) Long hotelId,
-        @RequestParam(required = false) String checkIn,
-        @RequestParam(required = false) String checkOut,
-        @RequestParam(required = false, defaultValue = "1") int guests,
-        @RequestParam(required = false, defaultValue = "1") int rooms,
-        Model model) {
-        //     @RequestParam Long hotelId,
-        //     @RequestParam String checkIn,
-        //     @RequestParam String checkOut,
-        //     @RequestParam int guests,
-        //     @RequestParam int rooms,
-        //     Model model) {
+    @GetMapping("/search")
+    public String getRooms(
+            @RequestParam(required = false) Long hotelId,
+            @RequestParam(required = false) String checkIn,
+            @RequestParam(required = false) String checkOut,
+            @RequestParam(required = false, defaultValue = "1") int guests,
+            @RequestParam(required = false, defaultValue = "1") int rooms,
+            Model model) {
 
-    // Validate required parameters
-    if (hotelId == null || checkIn == null || checkOut == null) {
-        model.addAttribute("error", "Please provide all required parameters.");
-        return "error"; // Render an error page if parameters are missing
+        // Validate required parameters
+        if (hotelId == null || checkIn == null || checkOut == null) {
+            model.addAttribute("error", "Please provide all required parameters.");
+            return "error"; // Render an error page if parameters are missing
+        }
+
+        // Fetch rooms for the specified hotel
+        List<Room> availableRooms = roomService.getRoomsByHotelIdAndGuests(hotelId, guests);
+
+        // Add data to the model
+        model.addAttribute("rooms", availableRooms);
+        model.addAttribute("checkIn", checkIn);
+        model.addAttribute("checkOut", checkOut);
+        model.addAttribute("guests", guests);
+        model.addAttribute("rooms", rooms);
+
+        // Fetch the hotel details and add to the model
+        Hotel hotel = hotelService.getHotelById(hotelId);
+        model.addAttribute("hotel", hotel);
+
+        return "rooms"; // Render rooms.html
     }
-
-    // Fetch rooms for the specified hotel
-    List<Room> availableRooms = roomService.getRoomsByHotelIdAndGuests(hotelId, guests);
-
-    // Add data to the model
-    model.addAttribute("rooms", availableRooms);
-    model.addAttribute("checkIn", checkIn);
-    model.addAttribute("checkOut", checkOut);
-    model.addAttribute("guests", guests);
-    model.addAttribute("rooms", rooms);
-
-    // Fetch the hotel details and add to the model
-    Hotel hotel = hotelService.getHotelById(hotelId);
-    model.addAttribute("hotel", hotel);
-
-    return "rooms"; // Render rooms.html
-}
 }
