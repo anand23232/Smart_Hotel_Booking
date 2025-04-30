@@ -47,12 +47,24 @@ public class RoomController {
 
 @GetMapping("/search")
 public String getRooms(
-        @RequestParam Long hotelId,
-        @RequestParam String checkIn,
-        @RequestParam String checkOut,
-        @RequestParam int guests,
-        @RequestParam int rooms,
+        @RequestParam(required = false) Long hotelId,
+        @RequestParam(required = false) String checkIn,
+        @RequestParam(required = false) String checkOut,
+        @RequestParam(required = false, defaultValue = "1") int guests,
+        @RequestParam(required = false, defaultValue = "1") int rooms,
         Model model) {
+        //     @RequestParam Long hotelId,
+        //     @RequestParam String checkIn,
+        //     @RequestParam String checkOut,
+        //     @RequestParam int guests,
+        //     @RequestParam int rooms,
+        //     Model model) {
+
+    // Validate required parameters
+    if (hotelId == null || checkIn == null || checkOut == null) {
+        model.addAttribute("error", "Please provide all required parameters.");
+        return "error"; // Render an error page if parameters are missing
+    }
 
     // Fetch rooms for the specified hotel
     List<Room> availableRooms = roomService.getRoomsByHotelIdAndGuests(hotelId, guests);

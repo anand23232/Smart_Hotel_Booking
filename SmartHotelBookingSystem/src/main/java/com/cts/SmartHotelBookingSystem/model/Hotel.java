@@ -4,21 +4,26 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name = "HOTEL")
 public class Hotel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "NAME", nullable = false)
     private String name;
+
+    @Column(name = "LOCATION", nullable = false)
     private String location;
-    private String imageUrl;
 
     @Column(length = 1000) // Allows for a longer description
     private String description;
 
     private Double price; // Price per night
 
-    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL)
+    private String imageUrl; // URL for the hotel's image
+
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Room> rooms;
 
     // Getters and Setters

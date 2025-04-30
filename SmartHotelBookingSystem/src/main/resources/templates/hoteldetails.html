@@ -100,47 +100,66 @@
         }
  
         /* Reviews Section */
-        .submitted-reviews {
-            margin-top: 40px;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
- 
-        .submitted-reviews h2 {
-            font-size: 2em;
-            margin-bottom: 20px;
-            color: #333;
-        }
- 
-        .submitted-reviews .review {
-            margin-bottom: 20px;
-            padding: 15px;
-            border-bottom: 1px solid #ddd;
-        }
- 
-        .submitted-reviews .review:last-child {
-            border-bottom: none;
-        }
- 
-        .submitted-reviews .review p {
-            margin: 5px 0;
-            line-height: 1.6;
-            font-size: 1em;
-        }
- 
-        .submitted-reviews .review .reviewer {
-            font-weight: bold;
-            color: #007BFF;
-            font-size: 1.1em;
-        }
- 
-        .submitted-reviews .review .stars {
-            color: #FFD700;
-            font-size: 1.3em;
-        }
- 
+       /* Reviews Section */
+.submitted-reviews {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.submitted-reviews h2 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+    border-bottom: 2px solid #007BFF;
+    padding-bottom: 10px;
+}
+
+.review {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.review:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.review .reviewer {
+    font-weight: bold;
+    color: #007BFF;
+    font-size: 1.2em;
+    margin-bottom: 5px;
+}
+
+.review p {
+    margin: 5px 0;
+    line-height: 1.6;
+    font-size: 1em;
+    color: #555;
+}
+
+.review .stars {
+    color: #FFD700;
+    font-size: 1.3em;
+    margin-top: 5px;
+}
+
+.review small {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #888;
+    text-align: right;
+}
         /* Review Form */
         .review-box {
             margin-top: 40px;
@@ -320,24 +339,25 @@
             });
         </script>
     <script>
-        function updateBooking() {
-            const checkIn = document.getElementById('check-in').value;
-            const checkOut = document.getElementById('check-out').value;
-            const guests = document.getElementById('guests').value;
-            const rooms = document.getElementById('rooms').value;
-            /*<![CDATA[*/
-            const hotelId = /*[[${hotel.id}]]*/ '';
-            /*]]>*/
-   
-            if (!checkIn || !checkOut) {
-                alert('Please select both check-in and check-out dates.');
-                return;
-            }
-   
-            // Redirect to the rooms page with query parameters
-            const url = `/rooms?hotelId=${hotelId}&checkIn=${checkIn}&checkOut=${checkOut}&guests=${guests}&rooms=${rooms}`;
-            window.location.href = url;
-        }
+       function updateBooking() {
+    const checkIn = document.getElementById('check-in').value;
+    const checkOut = document.getElementById('check-out').value;
+    const guests = document.getElementById('guests').value;
+    const rooms = document.getElementById('rooms').value;
+
+    /*<![CDATA[*/
+    const hotelId = /*[[${hotel.id}]]*/'';
+    /*]]>*/
+
+    if (!checkIn || !checkOut) {
+        alert('Please select both check-in and check-out dates.');
+        return;
+    }
+
+    // Redirect to the rooms page with query parameters
+    const url = `/rooms?hotelId=${hotelId}&checkIn=${checkIn}&checkOut=${checkOut}&guests=${guests}&rooms=${rooms}`;
+    window.location.href = url;
+}
     </script>
 </body>
 </html>

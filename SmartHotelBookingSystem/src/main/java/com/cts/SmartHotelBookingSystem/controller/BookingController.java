@@ -4,6 +4,7 @@ import com.cts.SmartHotelBookingSystem.model.Booking;
 import com.cts.SmartHotelBookingSystem.service.BookingService;
 import com.cts.SmartHotelBookingSystem.service.RoomService;
 import com.cts.SmartHotelBookingSystem.service.UserService;
+import com.cts.SmartHotelBookingSystem.model.Room;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,5 +49,17 @@ public class BookingController {
     public String deleteBooking(@PathVariable Long id) {
         bookingService.deleteBooking(id);
         return "redirect:/bookings";
+    }
+
+    @GetMapping("/{roomId}")
+    public String getBookingPage(@PathVariable Long roomId, Model model) {
+        // Fetch the room details by roomId
+        Room room = roomService.getRoomById(roomId);
+
+        // Add the room details to the model
+        model.addAttribute("room", room);
+
+        // Return the booking.html page
+        return "booking"; // Maps to booking.html
     }
 }

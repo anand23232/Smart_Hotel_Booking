@@ -1,47 +1,27 @@
 package com.cts.SmartHotelBookingSystem.controller;
- 
-import java.util.List;
-
+import com.cts.SmartHotelBookingSystem.service.RazorpayService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.cts.SmartHotelBookingSystem.model.Payment;
-import com.cts.SmartHotelBookingSystem.service.PaymentService;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import com.razorpay.RazorpayException;
  
-@Controller
-@RequestMapping("/payments")
+@RestController
+@RequestMapping("/api/payments")
 public class PaymentController {
+ 
     @Autowired
-    private PaymentService paymentService;
+    private RazorpayService razorpayService;
  
-    @GetMapping
-    public String getAllPayments(Model model) {
-        List<Payment> payments = paymentService.getAllPayments();
-        model.addAttribute("payments", payments);
-        return "payments"; // Maps to payments.html
+    @PostMapping("/create-order")
+    public String createOrder(@RequestParam int amount , @RequestParam String currency){
+ 
+        try {
+            return razorpayService.createOrder(amount, currency, "recepient_100");
+        } catch (RazorpayException e) {
+            throw new RuntimeException(e);
+        }
     }
  
-    @GetMapping("/create")
-    public String createPaymentForm(Model model) {
-        model.addAttribute("payment", new Payment());
-        return "create-payment"; // Maps to create-payment.html
-    }
- 
-    @PostMapping("/create")
-    public String createPayment(@ModelAttribute Payment payment) {
-        paymentService.savePayment(payment);
-        return "redirect:/payments";
-    }
- 
-    @GetMapping("/delete/{id}")
-    public String deletePayment(@PathVariable Long id) {
-        paymentService.deletePayment(id);
-        return "redirect:/payments";
-    }
 }

@@ -1,27 +1,32 @@
-
 package com.cts.SmartHotelBookingSystem.model;
 
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "ROOM")
 public class Room {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "ROOMNUMBER")
+    @Column(name = "ROOMNUMBER", nullable = false)
     private String roomNumber;
 
-    private String type; // e.g., Single, Double, Suite
-    private double price;
+    @Column(name = "TYPE", nullable = false)
+    private String type;
 
-    private int capacity; // Maximum number of guests the room can accommodate
+    @Column(name = "PRICE", nullable = false)
+    private Double price;
 
-    @Column(name = "AVAILABLEROOMS")
-    private int availableRooms; // Number of available rooms of this type
+    @Column(name = "CAPACITY", nullable = false)
+    private Integer capacity; // Ensure this matches the database column
+
+    @Column(name = "AVAILABLEROOMS", nullable = false)
+    private Integer availableRooms;
 
     @ManyToOne
-    @JoinColumn(name = "hotel_id", nullable = false)
+    @JoinColumn(name = "HOTEL_ID", nullable = false)
     private Hotel hotel;
 
     // Getters and Setters
@@ -49,27 +54,27 @@ public class Room {
         this.type = type;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
-    public int getCapacity() {
+    public Integer getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(int capacity) {
+    public void setCapacity(Integer capacity) {
         this.capacity = capacity;
     }
 
-    public int getAvailableRooms() {
+    public Integer getAvailableRooms() {
         return availableRooms;
     }
 
-    public void setAvailableRooms(int availableRooms) {
+    public void setAvailableRooms(Integer availableRooms) {
         this.availableRooms = availableRooms;
     }
 
@@ -79,5 +84,18 @@ public class Room {
 
     public void setHotel(Hotel hotel) {
         this.hotel = hotel;
+    }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "id=" + id +
+                ", roomNumber='" + roomNumber + '\'' +
+                ", type='" + type + '\'' +
+                ", price=" + price +
+                ", capacity=" + capacity +
+                ", availableRooms=" + availableRooms +
+                ", hotel=" + hotel +
+                '}';
     }
 }

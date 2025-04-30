@@ -7,45 +7,95 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        /* Custom Styles */
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Roboto', Arial, sans-serif;
+        }
+
+        .navbar {
+            background-color: #343a40;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color:#343a40;
+        }
+
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #495057;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+    </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Smart Hotel Booking</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/booking">Book Now</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <div class="container mt-5">
+    <!-- Navbar -->
+   
+    <!-- Booking Form -->
+    <div class="container">
         <h2 class="text-center">Book Your Stay</h2>
-        <form action="/submitBooking" method="post" class="mt-4">
-            <div class="form-group">
+        <div>
+            <div class="form-group mb-3">
                 <label for="name">Full Name</label>
                 <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name" required>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label for="email">Email Address</label>
                 <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label for="checkin">Check-in Date</label>
                 <input type="date" class="form-control" id="checkin" name="checkin" required>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label for="checkout">Check-out Date</label>
                 <input type="date" class="form-control" id="checkout" name="checkout" required>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label for="roomType">Room Type</label>
                 <select class="form-control" id="roomType" name="roomType" required>
                     <option value="single">Single</option>
@@ -53,12 +103,46 @@
                     <option value="suite">Suite</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary btn-block">Submit Booking</button>
-        </form>
+            <button id="pay-button" class="btn btn-primary w-100">Pay Now</button>
+        </div>
     </div>
+
+    <!-- Footer -->
+    <!-- <footer>
+        <p>&copy; 2025 Smart Hotel Booking. All rights reserved.</p>
+    </footer> -->
+
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-    
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+ 
+<script>
+    document.getElementById('pay-button').onclick = function () {
+        fetch('http://localhost:8085/api/payments/create-order?amount=1000&currency=INR', {
+            method: 'POST'
+        })
+            .then(response => response.json())
+            .then(order => {
+                const options = {
+                    key: "rzp_test_owoDPlegoJcSWW",
+                    amount: order.amount,
+                    currency: order.currency,
+                    name: "Smart Stays",
+                    description: "Test Transaction",
+                    order_id: order.id,
+                    handler: function (response) {
+                        alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
+                    },
+                    theme: {
+                        color: "#3399cc"
+                    }
+                };
+                const rzp = new Razorpay(options);
+                rzp.open();
+            })
+            .catch(err => console.error(err));
+    };
+</script>
+ 
 </body>
 </html>

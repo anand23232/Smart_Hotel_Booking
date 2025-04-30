@@ -154,7 +154,7 @@
                     <h3 th:text="${room.type}">Room Type</h3>
                     <p th:text="'Capacity: ' + ${room.capacity} + ' guests'">Room Capacity</p>
                     <p class="price" th:text="'Price: $' + ${room.price}">Room Price</p>
-                    <button th:onclick="'window.location.href=\'/bookRoom/' + ${room.id} + '\' '">Book Now</button>
+                    <button th:onclick="'window.location.href=\'/bookings/' + ${room.id} + '\' '">Book Now</button>
                 </div>
             </div>
         </div>
@@ -162,17 +162,7 @@
             <p>No rooms available for the selected criteria.</p>
         </div>
     </div>
- 
-    <script>
-        function updateBooking() {
-            const checkIn = document.getElementById('check-in').value;
-            const checkOut = document.getElementById('check-out').value;
-            const guests = document.getElementById('guests').value;
-            const rooms = document.getElementById('rooms').value;
- 
-            window.location.href = `/rooms?checkIn=${checkIn}&checkOut=${checkOut}&guests=${guests}&rooms=${rooms}`;
-        }
-    </script>
+   
+    
 </body>
 </html>
- 

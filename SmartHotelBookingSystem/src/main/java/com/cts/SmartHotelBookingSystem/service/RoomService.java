@@ -30,6 +30,7 @@ public class RoomService {
         return roomRepository.findByHotelId(hotelId);
     }
 
+    
     public Room saveRoom(Room room) {
         return roomRepository.save(room);
     }
