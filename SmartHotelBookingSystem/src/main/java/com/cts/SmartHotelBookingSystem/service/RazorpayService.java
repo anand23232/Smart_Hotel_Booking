@@ -17,12 +17,12 @@ public class RazorpayService {
     @Value("${razorpay.api.secret}")
     private String apiSecret ;
  
-    public String createOrder(int amount , String currency , String receiptId) throws RazorpayException {
+    public String createOrder(int amount , String currency , String receipt) throws RazorpayException {
         RazorpayClient razorpayClient = new RazorpayClient(apiKey,apiSecret);
         JSONObject orderRequest  = new JSONObject();
         orderRequest.put("amount", amount *100);
         orderRequest.put("currency",currency);
-        orderRequest.put("receipt", receiptId);
+        orderRequest.put("receipt", receipt);
  
         Order order = razorpayClient.orders.create(orderRequest);
         return order.toString();
