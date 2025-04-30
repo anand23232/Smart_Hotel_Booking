@@ -7,11 +7,7 @@ import java.util.List;
 
 @Repository
 public interface HotelRepository extends JpaRepository<Hotel, Long> {
-    // Custom query to find hotels by location
     List<Hotel> findByLocation(String location);
-
-    // Custom query to find hotels by name (case-insensitive)
-    List<Hotel> findByNameIgnoreCaseContaining(String name);
 
     List<Hotel> findByNameContainingIgnoreCaseOrLocationContainingIgnoreCase(String name, String location);
 }

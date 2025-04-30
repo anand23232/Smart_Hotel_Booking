@@ -13,7 +13,7 @@ public class HotelService {
     private HotelRepository hotelRepository;
 
     public List<Hotel> getAllHotels() {
-        return hotelRepository.findAll();
+        return hotelRepository.findAll(); // Retrieve all hotels
     }
 
     public Hotel getHotelById(Long id) {
