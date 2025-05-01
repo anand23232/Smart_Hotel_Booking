@@ -14,13 +14,7 @@ public class HotelService {
 
     // Fetch all hotels
     public List<Hotel> getAllHotels() {
-<<<<<<< HEAD
-        List<Hotel> hotels = hotelRepository.findAll();
-        System.out.println("Hotels fetched: " + hotels.size()); // Debug log
-        return hotels;
-=======
         return hotelRepository.findAll(); // Retrieve all hotels
->>>>>>> e7fedcd166ffb66bd7d2b5f34b5e5a8b685b3077
     }
 
     // Fetch a hotel by its ID
