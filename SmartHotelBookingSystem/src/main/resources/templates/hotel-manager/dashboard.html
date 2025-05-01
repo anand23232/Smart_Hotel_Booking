@@ -80,6 +80,8 @@
         </div>
     </div>
 
+    <div id="successMessage" class="alert alert-success d-none" role="alert"></div>
+
     <!-- Add Room Modal -->
     <div class="modal fade" id="addRoomModal" tabindex="-1" aria-labelledby="addRoomModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -89,7 +91,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form th:action="@{/rooms/add}" method="post">
+                    <form id="addRoomForm">
                         <div class="mb-3">
                             <label for="roomNumber" class="form-label">Room Number</label>
                             <input type="text" class="form-control" id="roomNumber" name="roomNumber" required>
@@ -118,7 +120,7 @@
                             <label for="hotelId" class="form-label">Hotel ID</label>
                             <input type="number" class="form-control" id="hotelId" name="hotel.id" placeholder="Enter Hotel ID" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Add Room</button>
+                        <button type="button" class="btn btn-primary" onclick="submitAddRoomForm()">Add Room</button>
                     </form>
                 </div>
             </div>
@@ -173,6 +175,40 @@
                     });
                 })
                 .catch(error => console.error('Error loading reviews:', error));
+        }
+
+        function submitAddRoomForm() {
+            const form = document.getElementById('addRoomForm');
+            const formData = new FormData(form);
+
+            fetch('/rooms/add', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Failed to add room');
+                }
+            })
+            .then(message => {
+                const successMessage = document.getElementById('successMessage');
+                successMessage.textContent = message;
+                successMessage.classList.remove('d-none'); // Show the message
+                form.reset(); // Reset the form fields
+                const modal = bootstrap.Modal.getInstance(document.getElementById('addRoomModal'));
+                modal.hide(); // Close the modal
+
+                // Hide the message after 3 seconds
+                setTimeout(() => {
+                    successMessage.classList.add('d-none');
+                }, 3000);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while adding the room.');
+            });
         }
     </script>
 </body>
