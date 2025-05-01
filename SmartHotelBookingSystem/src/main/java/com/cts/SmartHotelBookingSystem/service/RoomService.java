@@ -18,9 +18,7 @@ public class RoomService {
     @Autowired
     private ReviewRepository reviewRepository;
 
-    public List<Room> getAllRooms() {
-        return roomRepository.findAll();
-    }
+    // Removed duplicate method getAllRooms()
 
     public Room getRoomById(Long id) {
         return roomRepository.findById(id).orElse(null);
@@ -30,9 +28,11 @@ public class RoomService {
         return roomRepository.findByHotelId(hotelId);
     }
 
-    
     public Room saveRoom(Room room) {
-        return roomRepository.save(room);
+        return roomRepository.save(room); // Save room to the database
+    }
+    public List<Room> getAllRooms() {
+        return roomRepository.findAll(); // Retrieve all rooms
     }
 
     public void deleteRoom(Long id) {

@@ -1,30 +1,29 @@
 package com.cts.SmartHotelBookingSystem.model;
 
 import jakarta.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "HOTEL")
 public class Hotel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", nullable = false)
     private Long id;
 
-    @Column(name = "NAME", nullable = false)
+    @Column(name = "NAME", nullable = false, length = 255)
     private String name;
 
-    @Column(name = "LOCATION", nullable = false)
+    @Column(name = "LOCATION", nullable = false, length = 255)
     private String location;
 
-    @Column(length = 1000) // Allows for a longer description
+    @Column(name = "DESCRIPTION", length = 1000)
     private String description;
 
-    private Double price; // Price per night
+    @Column(name = "IMAGE_URL", length = 255)
+    private String imageUrl;
 
-    private String imageUrl; // URL for the hotel's image
-
-    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Room> rooms;
+    @Column(name = "PRICE")
+    private Double price;
 
     // Getters and Setters
     public Long getId() {
@@ -51,14 +50,6 @@ public class Hotel {
         this.location = location;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -67,19 +58,19 @@ public class Hotel {
         this.description = description;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public Double getPrice() {
         return price;
     }
 
     public void setPrice(Double price) {
         this.price = price;
-    }
-
-    public List<Room> getRooms() {
-        return rooms;
-    }
-
-    public void setRooms(List<Room> rooms) {
-        this.rooms = rooms;
     }
 }
