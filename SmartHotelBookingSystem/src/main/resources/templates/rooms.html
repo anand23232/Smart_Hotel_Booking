@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${hotel != null ? hotel.name + ' - Rooms' : 'Hotel Not Found - Rooms'}">Room Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <style>
         /* General Styles */
         body {
@@ -13,7 +15,7 @@
             background-color: #f4f4f9;
             color: #333;
         }
- 
+
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -22,18 +24,18 @@
             background-color: #007BFF;
             color: white;
         }
- 
+
         .navbar .hotel-name {
             font-size: 1.5em;
             font-weight: bold;
         }
- 
+
         .navbar .date-selection {
             display: flex;
             gap: 10px;
             align-items: center;
         }
- 
+
         .navbar .date-selection input,
         .navbar .date-selection select {
             padding: 8px;
@@ -41,7 +43,7 @@
             border-radius: 4px;
             font-size: 1em;
         }
- 
+
         .navbar .date-selection button {
             padding: 8px 15px;
             background-color: #0056b3;
@@ -52,11 +54,11 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
- 
+
         .navbar .date-selection button:hover {
             background-color: #003f8a;
         }
- 
+
         .container {
             max-width: 900px;
             margin: 40px auto;
@@ -65,7 +67,7 @@
             border-radius: 12px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
         }
- 
+
         .room-card {
             display: flex;
             gap: 20px;
@@ -76,35 +78,35 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             background-color: #f9f9f9;
         }
- 
+
         .room-card img {
             width: 150px;
             height: 150px;
             object-fit: cover;
             border-radius: 8px;
         }
- 
+
         .room-details {
             flex: 1;
         }
- 
+
         .room-details h3 {
             margin: 0;
             font-size: 1.5em;
             color: #007BFF;
         }
- 
+
         .room-details p {
             margin: 5px 0;
             line-height: 1.6;
         }
- 
+
         .room-details .price {
             font-size: 1.2em;
             font-weight: bold;
             color: #333;
         }
- 
+
         .room-details button {
             margin-top: 10px;
             padding: 8px 15px;
@@ -116,14 +118,26 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
- 
+
         .room-details button:hover {
             background-color: #0056b3;
+        }
+
+        .back-to-hotel {
+            display: inline-block;
+            margin-bottom: 10px;
+            color: #0c0d0d;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back-to-hotel i {
+            margin-right: 5px;
+            font-size: 20px;
         }
     </style>
 </head>
 <body>
-    <!-- Navbar -->
     <div class="navbar">
         <div class="hotel-name" th:text="${hotel != null ? hotel.name : 'Hotel Not Found'}">Hotel Name</div>
         <div class="date-selection">
@@ -144,17 +158,20 @@
             <button type="button" onclick="updateBooking()">Update</button>
         </div>
     </div>
- 
+
     <div class="container">
+        <a id="backToHotel" href="#" class="back-to-hotel">
+            <i class="fas fa-arrow-left"></i>
+        </a>
         <h1>Available Rooms</h1>
         <div th:if="${rooms != null and !rooms.isEmpty()}">
             <div th:each="room : ${rooms}" class="room-card">
-                <img th:src="@{/images/room{id}.jpg(id=${room.id})}" th:alt="${room.type}">
+                <img th:src="${room.imageUrl}" th:alt="${room.type}">
                 <div class="room-details">
                     <h3 th:text="${room.type}">Room Type</h3>
                     <p th:text="'Capacity: ' + ${room.capacity} + ' guests'">Room Capacity</p>
                     <p class="price" th:text="'Price: $' + ${room.price}">Room Price</p>
-                    <button th:onclick="'window.location.href=\'/bookings/' + ${room.id} + '\' '">Book Now</button>
+                    <button th:onclick="'window.location.href=\'/bookings/' + ${room.id} + '?price=' + ${room.price} + '\''">Book Now</button>
                 </div>
             </div>
         </div>
@@ -162,7 +179,38 @@
             <p>No rooms available for the selected criteria.</p>
         </div>
     </div>
-   
-    
+
+    <script th:inline="javascript">
+        function updateBooking() {
+            const checkIn = document.getElementById('check-in').value;
+            const checkOut = document.getElementById('check-out').value;
+            const guests = document.getElementById('guests').value;
+            const rooms = document.getElementById('rooms').value;
+
+            /*<![CDATA[*/
+            const hotelId = /*[[${hotel.id}]]*/'';
+            /*]]>*/
+
+            if (!checkIn || !checkOut) {
+                alert('Please select both check-in and check-out dates.');
+                return;
+            }
+
+            // Redirect to the rooms page with query parameters
+            const url = `/rooms?hotelId=${hotelId}&checkIn=${checkIn}&checkOut=${checkOut}&guests=${guests}&rooms=${rooms}`;
+            window.location.href = url;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const backToHotelLink = document.getElementById('backToHotel');
+            // Use the hotelId that is already available in your Thymeleaf context
+            const hotelId = /*[[${hotel.id}]]*/ '';
+
+            // Construct the correct URL for hoteldetails.html using the hotelId.
+            const hotelDetailsUrl = `/hotels/${hotelId}`;
+            backToHotelLink.href = hotelDetailsUrl;
+
+        });
+    </script>
 </body>
 </html>

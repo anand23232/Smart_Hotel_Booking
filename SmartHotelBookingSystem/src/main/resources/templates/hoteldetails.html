@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width:100%; initial-scale=1.0">
     <title th:text="${hotel.name}">Hotel Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     <style>
         /* General Styles */
         body {
@@ -254,6 +256,18 @@
             transform: translateY(0); /* Reset lift effect */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Reset shadow */
         }
+        .back-to-hotel {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #0c0d0d;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back-to-hotel i {
+            margin-right: 5px;
+            font-size: 20px;
+        }
     </style>
 </head>
 <body>
@@ -280,6 +294,9 @@
     </div>
   
     <div class="container">
+        <a href="/" id="backToHotel" class="btn btn-link back-to-home">
+            <i class="fas fa-arrow-left"></i>
+        </a>
         <img th:src="@{/images/hotel{id}.jpg(id=${hotel.id})}" th:alt="${hotel.name}" class="hotel-image">
         <div class="hotel-details">
             <h1 th:text="${hotel.name}">Hotel Name</h1>
@@ -365,6 +382,17 @@
                     }, 3000);
                 }
             });
+
+            document.addEventListener('DOMContentLoaded', function() {
+            const backToHotelLink = document.getElementById('backToHotel');
+            // Use the hotelId that is already available in your Thymeleaf context
+            const hotelId = /*[[${hotel.id}]]*/ '';
+
+            // Construct the correct URL for hoteldetails.html using the hotelId.
+            const hotelDetailsUrl = `/hotels`;
+            backToHotelLink.href = hotelDetailsUrl;
+
+        });
         </script>
     <script>
        function updateBooking() {
