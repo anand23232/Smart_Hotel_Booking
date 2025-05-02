@@ -79,14 +79,32 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute User user, RedirectAttributes redirectAttributes) {
+    public String registerUser(@ModelAttribute User user, 
+                               @RequestParam(required = false) String hotelName, 
+                               RedirectAttributes redirectAttributes) {
+        // Check if the username or email is already taken
         if (userService.isUsernameOrEmailTaken(user.getUsername(), user.getEmail())) {
             redirectAttributes.addFlashAttribute("error", "Username or Email is already taken. Please choose another.");
-            return "redirect:/users/register"; // Redirect back to the registration page with an error
+            return "redirect:/users/register";
         }
-        userService.saveUser(user); // Save the user using the UserService
+
+        // If the role is "manager", ensure the hotel name is provided
+        if ("manager".equalsIgnoreCase(user.getRole()) && (hotelName == null || hotelName.trim().isEmpty())) {
+            redirectAttributes.addFlashAttribute("error", "Hotel name is required for managers.");
+            return "redirect:/users/register";
+        }
+
+        // Set the hotel name for managers
+        if ("manager".equalsIgnoreCase(user.getRole())) {
+            user.setHotelName(hotelName);
+        }
+
+        // Save the user
+        userService.saveUser(user);
+
+        // Add a success message and redirect to the login page
         redirectAttributes.addFlashAttribute("success", "Account created successfully! Please log in.");
-        return "redirect:/users/login"; // Redirect to the login page after successful registration
+        return "redirect:/users/login";
     }
 
     @GetMapping("/admin/dashboard")

@@ -146,8 +146,9 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
-        function loadReviews(hotelId) {
-            fetch(`/hotels/${hotelId}/reviews`)
+        // Load reviews for the manager's hotel
+        function loadReviews() {
+            fetch('/reviews/manager')
                 .then(response => response.json())
                 .then(reviews => {
                     const reviewsContainer = document.getElementById('reviewsContainer');
@@ -158,10 +159,10 @@
                         reviewDiv.classList.add('review-card');
 
                         reviewDiv.innerHTML = `
-                            <p><strong>User:</strong> ${review.userName}</p>
+                            <p><strong>User:</strong> ${review.reviewer}</p>
                             <p><strong>Review:</strong> ${review.content}</p>
-                            <form action="/reviews/reply" method="post">
-                                <input type="hidden" name="reviewId" value="${review.id}">
+                            ${review.reply ? `<p><strong>Reply:</strong> ${review.reply}</p>` : ''}
+                            <form onsubmit="replyToReview(event, ${review.id})">
                                 <div class="mb-3">
                                     <label for="replyContent-${review.id}" class="form-label">Reply:</label>
                                     <textarea class="form-control" id="replyContent-${review.id}" name="replyContent" rows="2" required></textarea>
@@ -176,6 +177,42 @@
                 })
                 .catch(error => console.error('Error loading reviews:', error));
         }
+
+        // Handle reply submission
+        function replyToReview(event, reviewId) {
+            event.preventDefault();
+
+            const replyContent = document.getElementById(`replyContent-${reviewId}`).value;
+
+            fetch('/reviews/reply', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    reviewId: reviewId,
+                    replyContent: replyContent,
+                }),
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                        throw new Error('Failed to reply to review');
+                    }
+                })
+                .then(message => {
+                    alert(message);
+                    loadReviews(); // Reload reviews after replying
+                })
+                .catch(error => {
+                    console.error('Error replying to review:', error);
+                    alert('An error occurred while replying to the review.');
+                });
+        }
+
+        // Load reviews when the page loads
+        document.addEventListener('DOMContentLoaded', loadReviews);
 
         function submitAddRoomForm() {
             const form = document.getElementById('addRoomForm');
