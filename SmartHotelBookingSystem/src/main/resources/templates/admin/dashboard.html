@@ -5,8 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        header {
+            background-color: #343a40;
+            color: white;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: end;
+            align-items: end;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+        header .logout-btn {
+            padding: 0.5rem 1rem;
+            background-color: #dc3545;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            transition: background-color 0.3s;
+        }
+
+        header .logout-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
 </head>
 <body>
+    <header>
+        <!-- <h1>Admin Dashboard</h1> -->
+        <a href="/admin/adminprofile" class="btn btn-primary">Profile</a>
+        <a href="/users/logout" class="logout-btn">Logout</a>
+
+        
+    </header>
     <div class="container mt-5">
         <h1 class="text-center mb-4">Admin Dashboard</h1>
         

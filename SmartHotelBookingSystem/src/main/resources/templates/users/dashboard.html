@@ -19,11 +19,28 @@
             padding: 1.5rem 2rem;
             text-align: center;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         header h1 {
             margin: 0;
             font-size: 1.8rem;
+        }
+
+        header .logout-btn {
+            padding: 0.5rem 1rem;
+            background-color: #dc3545;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            transition: background-color 0.3s;
+        }
+
+        header .logout-btn:hover {
+            background-color: #c82333;
         }
 
         .container {
@@ -117,6 +134,7 @@
 <body>
     <header>
         <h1>Welcome to Smart Hotel Booking System</h1>
+        <a href="/users/logout" class="logout-btn">Logout</a>
     </header>
     <div class="container">
         <div class="dashboard-header">
@@ -126,17 +144,17 @@
             <div class="card">
                 <h3>View Bookings</h3>
                 <p>Check your current and past bookings.</p>
-                <a href="/user/viewbooking">View</a>
+                <a href="/users/viewbooking">View</a>
             </div>
             <div class="card">
                 <h3>Make a Reservation</h3>
                 <p>Book a room for your next stay.</p>
-                <a href="/hotels">Book Now</a> <!-- Updated href -->
+                <a href="/hotels">Book Now</a>
             </div>
             <div class="card">
                 <h3>Profile Settings</h3>
-                <p>Update your personal information.</p>
-                <a href="/user/profile">Edit Profile</a>
+                <p>Here you can view your personal information.</p>
+                <a href="/users/profile">View Profile</a>
             </div>
         </div>
     </div>
