@@ -113,12 +113,19 @@
             </div>
             <div class="mb-3">
                 <label for="role" class="form-label">Role</label>
-                <select class="form-select" id="role" name="role" required>
+                <select class="form-select" id="role" name="role" required onchange="toggleHotelNameField()">
                     <option value="customer">Customer</option>
                     <option value="manager">Manager</option>
                     <option value="admin">Admin</option>
                 </select>
             </div>
+
+            <!-- Hidden input field for hotel name -->
+            <div class="mb-3" id="hotel-name-field" style="display: none;">
+                <label for="hotelName" class="form-label">Hotel Name</label>
+                <input type="text" class="form-control" id="hotelName" name="hotelName" placeholder="Enter the hotel name">
+            </div>
+
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
                 <input type="password" class="form-control" id="password" name="password" placeholder="Enter a secure password" required>
@@ -136,6 +143,18 @@
         const errorMessage = document.getElementById('error-message');
         if (errorMessage && errorMessage.textContent.trim() !== '') {
             alert(errorMessage.textContent.trim());
+        }
+
+        function toggleHotelNameField() {
+            const roleSelect = document.getElementById('role');
+            const hotelNameField = document.getElementById('hotel-name-field');
+
+            // Show the hotel name field if the selected role is "manager"
+            if (roleSelect.value === 'manager') {
+                hotelNameField.style.display = 'block';
+            } else {
+                hotelNameField.style.display = 'none';
+            }
         }
     </script>
 </body>

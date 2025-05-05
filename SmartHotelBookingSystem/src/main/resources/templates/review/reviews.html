@@ -60,12 +60,11 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Thymeleaf loop to dynamically populate reviews -->
                 <tr th:each="review : ${reviews}">
-                    <td th:text="${review.guestName}">Guest Name</td>
+                    <td th:text="${review.user.name}">Guest Name</td>
                     <td th:text="${review.rating}">Rating</td>
-                    <td th:text="${review.comment}">Comment</td>
-                    <td th:text="${review.response}">Response</td>
+                    <td th:text="${review.content}">Comment</td>
+                    <td th:text="${review.reply}">Response</td>
                     <td>
                         <a th:href="@{/respond-review/{id}(id=${review.id})}" class="btn btn-warning btn-sm">Respond</a>
                     </td>

@@ -5,25 +5,29 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "HOTEL")
 public class Hotel {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID", nullable = false)
     private Long id;
 
-    @Column(name = "NAME", nullable = false, length = 255)
+    @Column(name = "NAME", nullable = false, unique = true)
     private String name;
 
-    @Column(name = "LOCATION", nullable = false, length = 255)
+    @Column(name = "LOCATION", nullable = false)
     private String location;
+
+    @Column(name = "IMAGE_URL")
+    private String imageUrl;
 
     @Column(name = "DESCRIPTION", length = 1000)
     private String description;
 
-    @Column(name = "IMAGE_URL", length = 255)
-    private String imageUrl;
-
     @Column(name = "PRICE")
     private Double price;
+
+    @ManyToOne
+    @JoinColumn(name = "MANAGER_ID", referencedColumnName = "id", nullable = true)
+    private User manager;
 
     // Getters and Setters
     public Long getId() {
@@ -50,14 +54,6 @@ public class Hotel {
         this.location = location;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getImageUrl() {
         return imageUrl;
     }
@@ -66,11 +62,27 @@ public class Hotel {
         this.imageUrl = imageUrl;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Double getPrice() {
         return price;
     }
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public User getManager() {
+        return manager;
+    }
+
+    public void setManager(User manager) {
+        this.manager = manager;
     }
 }
