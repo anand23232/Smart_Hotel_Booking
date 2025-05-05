@@ -67,30 +67,42 @@
         <h1>Booking Summary</h1>
         <div class="summary">
             <div class="summary-item">
-                <span>Hotel Name:</span>
-                <span>Grand Palace Hotel</span>
-            </div>
-            <div class="summary-item">
                 <span>Check-in Date:</span>
-                <span>2023-10-15</span>
+                <span id="checkin-summary"></span>
             </div>
             <div class="summary-item">
                 <span>Check-out Date:</span>
-                <span>2023-10-20</span>
+                <span id="checkout-summary"></span>
             </div>
             <div class="summary-item">
-                <span>Guests:</span>
-                <span>2 Adults, 1 Child</span>
+                <span>Room Type:</span>
+                <span id="room-type-summary"></span>
             </div>
             <div class="summary-item">
                 <span>Total Price:</span>
-                <span>$750</span>
+                <span id="total-price-summary"></span>
             </div>
         </div>
         <div class="total">
-            <strong>Total Amount: $750</strong>
+            <strong>Total Amount: <span id="final-total-summary"></span></strong>
         </div>
         <a href="/confirm-booking" class="btn">Confirm Booking</a>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const checkin = urlParams.get('checkin');
+            const checkout = urlParams.get('checkout');
+            const roomType = urlParams.get('roomType');
+            const totalPrice = urlParams.get('totalPrice');
+
+            document.getElementById('checkin-summary').textContent = checkin;
+            document.getElementById('checkout-summary').textContent = checkout;
+            document.getElementById('room-type-summary').textContent = roomType.charAt(0).toUpperCase() + roomType.slice(1); // Basic capitalization
+            document.getElementById('total-price-summary').textContent = totalPrice;
+            document.getElementById('final-total-summary').textContent = totalPrice;
+        });
+    </script>
 </body>
 </html>

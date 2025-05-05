@@ -98,15 +98,15 @@
             <i class="fas fa-arrow-left"></i>
         </a>
         <h2 class="text-center">Book Your Stay</h2>
-        <div>
-            <div class="form-group mb-3">
+        <form id="bookingForm">
+            <!-- <div class="form-group mb-3">
                 <label for="name">Full Name</label>
                 <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name" required>
             </div>
             <div class="form-group mb-3">
                 <label for="email">Email Address</label>
                 <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
-            </div>
+            </div> -->
             <div class="form-group mb-3">
                 <label for="checkin">Check-in Date</label>
                 <input type="date" class="form-control" id="checkin" name="checkin" required>
@@ -123,8 +123,12 @@
                     <option value="suite">Suite</option>
                 </select>
             </div>
-            <button id="pay-button" class="btn btn-primary w-100">Pay Now</button>
-        </div>
+            <div class="form-group mb-3">
+                <label for="price">Price</label>
+                <input type="text" class="form-control" id="price" name="price" value="" readonly>
+            </div>
+            <button type="button" id="pay-button" class="btn btn-primary w-100">Pay Now</button>
+        </form>
     </div>
 
     <footer>
@@ -134,7 +138,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
-    <script th:inline="javascript">
+    <!-- <script th:inline="javascript">
         document.addEventListener('DOMContentLoaded', function() {
             const backToRoomsLink = document.getElementById('backToRooms');
             const referrer = document.referrer;
@@ -146,20 +150,36 @@
                 // Optionally, handle cases where the user navigated to booking.html directly
                 backToRoomsLink.href = '/'; // Or any other default back page
             }
+
+            // Populate the price field on page load
+            const urlParams = new URLSearchParams(window.location.search);
+            const amountFromRoom = urlParams.get('price');
+            const priceInput = document.getElementById('price');
+            if (amountFromRoom) {
+            const calculatedPrice = parseFloat(amountFromRoom) * 80;
+            priceInput.value = calculatedPrice.toFixed(2) + ' INR'; // Display multiplied price
+        }
         });
 
         document.getElementById('pay-button').onclick = function () {
-            // Extract query parameters from the URL
+            // Check if the form is valid
+            const form = document.getElementById('bookingForm');
+            if (!form.checkValidity()) {
+                form.reportValidity(); // Display any validation errors
+                return; // Stop the payment process if the form is invalid
+            }
+
+            // Extract query parameters from the URL (price is already displayed)
             const urlParams = new URLSearchParams(window.location.search);
-            const amountFromRoom = urlParams.get('price'); // Get the 'price' parameter
-            const amountInCents = parseFloat(amountFromRoom) * 100;
+            const amountFromRoom = urlParams.get('price');
+            const amountInCents = parseFloat(amountFromRoom) * 80;
 
-            const currency = 'USD'; // HARDCODE CURRENCY TO USD FOR TESTING
+            const currency = 'INR';
 
-            console.log("Amount in Cents (USD):", amountInCents);
-            console.log("Currency:", currency); // VERY IMPORTANT: LOG THE CURRENCY
+            console.log("Amount in Cents (INR):", amountInCents);
+            console.log("Currency:", currency);
 
-            const url = `http://localhost:8082/api/payments/create-order?amount=${amountInCents}&currency=${currency}`; // CORRECT URL CONSTRUCTION
+            const url = `http://localhost:8082/api/payments/create-order?amount=${amountInCents}&currency=${currency}`;
 
             fetch(url, {
                 method: 'POST',
@@ -189,6 +209,108 @@
             })
             .catch(err => console.error(err));
         };
+    </script> -->
+    <script th:inline="javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            const backToRoomsLink = document.getElementById('backToRooms');
+            const referrer = document.referrer;
+            const checkinInput = document.getElementById('checkin');
+            const checkoutInput = document.getElementById('checkout');
+            const priceInput = document.getElementById('price');
+    
+            // Function to calculate and display the total cost
+            function calculateAndDisplayCost() {
+                const checkinDateValue = checkinInput.value;
+                const checkoutDateValue = checkoutInput.value;
+                const urlParams = new URLSearchParams(window.location.search);
+                const dailyRate = parseFloat(urlParams.get('price'));
+    
+                if (checkinDateValue && checkoutDateValue && !isNaN(dailyRate)) {
+                    const checkinDate = new Date(checkinDateValue);
+                    const checkoutDate = new Date(checkoutDateValue);
+    
+                    // Calculate the difference in milliseconds
+                    const timeDifference = checkoutDate.getTime() - checkinDate.getTime();
+    
+                    // Convert milliseconds to days
+                    const numberOfDays = Math.ceil(timeDifference / (1000 * 3600 * 24));
+    
+                    if (numberOfDays > 0) {
+                        const totalCost = dailyRate * numberOfDays * 80; // Multiply by 80
+                        priceInput.value = totalCost.toFixed(2) + ' INR';
+                    } else {
+                        priceInput.value = '0.00 INR';
+                    }
+                } else {
+                    priceInput.value = dailyRate ? (dailyRate * 80).toFixed(2) + ' INR' : '0.00 INR';
+                }
+            }
+    
+            // Initial calculation
+            calculateAndDisplayCost();
+    
+            // Recalculate on date changes
+            checkinInput.addEventListener('change', calculateAndDisplayCost);
+            checkoutInput.addEventListener('change', calculateAndDisplayCost);
+    
+            // Handle back link
+            if (referrer.includes('/rooms')) {
+                backToRoomsLink.href = referrer;
+            } else {
+                backToRoomsLink.href = '/';
+            }
+        });
+    
+        document.getElementById('pay-button').onclick = function () {
+    const form = document.getElementById('bookingForm');
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+    }
+
+    const priceInputValue = document.getElementById('price').value;
+    const displayedCost = parseFloat(priceInputValue.replace(' INR', ''));
+    const amountInCents = displayedCost;
+
+    const currency = 'INR';
+
+    // Get the form values HERE, before the fetch request
+    const checkinDate = document.getElementById('checkin').value;
+    const checkoutDate = document.getElementById('checkout').value;
+    const roomType = document.getElementById('roomType').value;
+    const totalPrice = document.getElementById('price').value;
+
+    console.log("Amount in Cents (INR):", amountInCents);
+    console.log("Currency:", currency);
+
+    const url = `http://localhost:8082/api/payments/create-order?amount=${amountInCents}&currency=${currency}`;
+
+    fetch(url, {
+        method: 'POST',
+    })
+    .then(response => response.json())
+    .then(order => {
+        const options = {
+            key: "rzp_test_owoDPlegoJcSWW",
+            amount: order.amount,
+            currency: order.currency,
+            name: "Smart Stays",
+            description: "Test Transaction",
+            order_id: order.id,
+            handler: function (response) {
+                console.log("Payment Success Callback Executed!");
+                alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
+                window.location.href = `/hotels`;
+            },
+            theme: {
+                color: "#3399cc"
+            }
+        };
+        const rzp = new Razorpay(options);
+        rzp.open();
+    })
+    .catch(err => console.error(err));
+};
     </script>
 </body>
 </html>
