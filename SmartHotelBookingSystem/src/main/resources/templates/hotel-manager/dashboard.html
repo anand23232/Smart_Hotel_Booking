@@ -10,10 +10,36 @@
             background-color: #f4f6f9;
             font-family: Arial, sans-serif;
         }
-        h1 {
-            color: #333;
-            font-weight: bold;
+
+        header {
+            background-color: #343a40;
+            color: white;
+            padding: 1.5rem 2rem;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: end;
+            align-items: end;
         }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+        header .logout-btn {
+            padding: 0.5rem 1rem;
+            background-color: #dc3545;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            transition: background-color 0.3s;
+        }
+
+        header .logout-btn:hover {
+            background-color: #c82333;
+        }
+        
         .btn-primary {
             background-color: #007bff;
             border-color: #007bff;
@@ -54,6 +80,13 @@
     </style>
 </head>
 <body>
+    <header>
+        <!-- <h1>Admin Dashboard</h1> -->
+        <a href="/admin/adminprofile" class="btn btn-primary">Profile</a>
+        <a href="/users/logout" class="logout-btn">Logout</a>
+
+        
+    </header>
     <div class="container mt-5">
         <h1 class="text-center mb-4">Hotel Manager Dashboard</h1>
 
@@ -80,6 +113,8 @@
         </div>
     </div>
 
+    <div id="successMessage" class="alert alert-success d-none" role="alert"></div>
+
     <!-- Add Room Modal -->
     <div class="modal fade" id="addRoomModal" tabindex="-1" aria-labelledby="addRoomModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -89,7 +124,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form th:action="@{/rooms/add}" method="post">
+                    <form id="addRoomForm">
                         <div class="mb-3">
                             <label for="roomNumber" class="form-label">Room Number</label>
                             <input type="text" class="form-control" id="roomNumber" name="roomNumber" required>
@@ -118,7 +153,7 @@
                             <label for="hotelId" class="form-label">Hotel ID</label>
                             <input type="number" class="form-control" id="hotelId" name="hotel.id" placeholder="Enter Hotel ID" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Add Room</button>
+                        <button type="button" class="btn btn-primary" onclick="submitAddRoomForm()">Add Room</button>
                     </form>
                 </div>
             </div>
@@ -144,8 +179,9 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script>
-        function loadReviews(hotelId) {
-            fetch(`/hotels/${hotelId}/reviews`)
+        // Load reviews for the manager's hotel
+        function loadReviews() {
+            fetch('/reviews/manager')
                 .then(response => response.json())
                 .then(reviews => {
                     const reviewsContainer = document.getElementById('reviewsContainer');
@@ -156,10 +192,10 @@
                         reviewDiv.classList.add('review-card');
 
                         reviewDiv.innerHTML = `
-                            <p><strong>User:</strong> ${review.userName}</p>
+                            <p><strong>User:</strong> ${review.reviewer}</p>
                             <p><strong>Review:</strong> ${review.content}</p>
-                            <form action="/reviews/reply" method="post">
-                                <input type="hidden" name="reviewId" value="${review.id}">
+                            ${review.reply ? `<p><strong>Reply:</strong> ${review.reply}</p>` : ''}
+                            <form onsubmit="replyToReview(event, ${review.id})">
                                 <div class="mb-3">
                                     <label for="replyContent-${review.id}" class="form-label">Reply:</label>
                                     <textarea class="form-control" id="replyContent-${review.id}" name="replyContent" rows="2" required></textarea>
@@ -173,6 +209,76 @@
                     });
                 })
                 .catch(error => console.error('Error loading reviews:', error));
+        }
+
+        // Handle reply submission
+        function replyToReview(event, reviewId) {
+            event.preventDefault();
+
+            const replyContent = document.getElementById(`replyContent-${reviewId}`).value;
+
+            fetch('/reviews/reply', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    reviewId: reviewId,
+                    replyContent: replyContent,
+                }),
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                        throw new Error('Failed to reply to review');
+                    }
+                })
+                .then(message => {
+                    alert(message);
+                    loadReviews(); // Reload reviews after replying
+                })
+                .catch(error => {
+                    console.error('Error replying to review:', error);
+                    alert('An error occurred while replying to the review.');
+                });
+        }
+
+        // Load reviews when the page loads
+        document.addEventListener('DOMContentLoaded', loadReviews);
+
+        function submitAddRoomForm() {
+            const form = document.getElementById('addRoomForm');
+            const formData = new FormData(form);
+
+            fetch('/rooms/add', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.text();
+                } else {
+                    throw new Error('Failed to add room');
+                }
+            })
+            .then(message => {
+                const successMessage = document.getElementById('successMessage');
+                successMessage.textContent = message;
+                successMessage.classList.remove('d-none'); // Show the message
+                form.reset(); // Reset the form fields
+                const modal = bootstrap.Modal.getInstance(document.getElementById('addRoomModal'));
+                modal.hide(); // Close the modal
+
+                // Hide the message after 3 seconds
+                setTimeout(() => {
+                    successMessage.classList.add('d-none');
+                }, 3000);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while adding the room.');
+            });
         }
     </script>
 </body>

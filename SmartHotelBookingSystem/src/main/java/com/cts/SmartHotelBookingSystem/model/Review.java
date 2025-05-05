@@ -1,6 +1,7 @@
 package com.cts.SmartHotelBookingSystem.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -25,7 +26,7 @@ public class Review {
     @JsonIgnore
     private User user;
 
-    @Column(name = "REVIEWER", length = 255)
+    @Column(name = "REVIEWER", length = 255, nullable = false)
     private String reviewer;
 
     @Column(name = "CONTENT", nullable = false, columnDefinition = "CLOB")
@@ -37,6 +38,7 @@ public class Review {
     private int rating;
 
     @Column(name = "REPLY", columnDefinition = "CLOB")
+    @JsonInclude(JsonInclude.Include.NON_NULL) // Include only if not null
     private String reply;
 
     @Column(name = "CREATED_AT", nullable = false, updatable = false)
@@ -45,6 +47,9 @@ public class Review {
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
+        if (this.user != null) {
+            this.reviewer = this.user.getName(); // Automatically set the reviewer name from the User entity
+        }
     }
 
     // Getters and Setters
@@ -70,6 +75,9 @@ public class Review {
 
     public void setUser(User user) {
         this.user = user;
+        if (user != null) {
+            this.reviewer = user.getName(); // Automatically set the reviewer name when the user is set
+        }
     }
 
     public String getReviewer() {

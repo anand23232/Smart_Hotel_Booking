@@ -5,6 +5,7 @@ import com.cts.SmartHotelBookingSystem.model.Room;
 import com.cts.SmartHotelBookingSystem.service.RoomService;
 import com.cts.SmartHotelBookingSystem.service.HotelService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,14 +24,14 @@ public class RoomController {
     private HotelService hotelService;
 
     @PostMapping("/add")
-    public String addRoom(@ModelAttribute Room room, RedirectAttributes redirectAttributes) {
-        if (room.getHotel() == null || hotelService.getHotelById(room.getHotel().getId()) == null) {
-            redirectAttributes.addFlashAttribute("error", "Invalid Hotel ID");
-            return "redirect:/rooms/create";
+    @ResponseBody
+    public ResponseEntity<String> addRoom(@ModelAttribute Room room) {
+        if (room.getHotel() == null || room.getHotel().getId() == null) {
+            return ResponseEntity.badRequest().body("Hotel ID is required to add a room.");
         }
-        roomService.saveRoom(room);
-        redirectAttributes.addFlashAttribute("success", "Room added successfully!");
-        return "redirect:/rooms";
+
+        roomService.saveRoom(room); // Save the room to the database
+        return ResponseEntity.ok("Room added successfully!");
     }
 
     @GetMapping
