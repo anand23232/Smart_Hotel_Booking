@@ -166,7 +166,7 @@
         <h1>Available Rooms</h1>
         <div th:if="${rooms != null and !rooms.isEmpty()}">
             <div th:each="room : ${rooms}" class="room-card">
-                <img th:src="${room.imageUrl}" th:alt="${room.type}">
+                
                 <div class="room-details">
                     <h3 th:text="${room.type}">Room Type</h3>
                     <p th:text="'Capacity: ' + ${room.capacity} + ' guests'">Room Capacity</p>
