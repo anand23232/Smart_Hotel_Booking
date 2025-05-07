@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotels</title>
-    <!-- Add Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
@@ -24,9 +23,11 @@
             color: #007bff;
             text-decoration: none;
         }
+
         .back-to-home i {
             margin-right: 5px;
         }
+
         .hotel-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -34,6 +35,7 @@
             padding: 20px;
             width: 100%;
         }
+
         .hotel-card {
             border: 1px solid #ddd;
             border-radius: 8px;
@@ -46,37 +48,45 @@
             color: inherit;
             background-color: white; /* Set background color to white */
         }
+
         .hotel-card:hover {
             transform: scale(1.10) rotateX(6deg) rotateY(6deg);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
         }
+
         .hotel-card img {
             width: 100%;
             height: 200px;
             object-fit: cover;
         }
+
         .hotel-card .details {
             padding: 15px;
         }
+
         .hotel-card .details h3 {
             margin: 10px 0;
             font-size: 1.2em;
         }
+
         .hotel-card .details p {
             margin: 5px 0;
             color: #555;
         }
+
         .hotel-card .details .price {
             margin-top: 10px;
             font-size: 1.1em;
             font-weight: bold;
             color: #007BFF;
         }
+
         .search-bar-container {
             display: flex;
             justify-content: center;
             margin: 20px 0;
         }
+
         .search-bar {
             width: 300px;
             padding: 10px;
@@ -84,6 +94,7 @@
             border-radius: 4px;
             font-size: 1em;
         }
+
         .search-button {
             padding: 10px 20px;
             margin-left: 10px;
@@ -94,6 +105,7 @@
             font-size: 1em;
             cursor: pointer;
         }
+
         .search-button:hover {
             background-color: #0056b3;
         }
@@ -134,9 +146,11 @@
             text-decoration: none;
             transition: color 0.3s ease;
         }
+
         .nav-arrow:hover {
             color: #0056b3;
         }
+
         .back-to-home {
             font-size: 14px;
             color: #0c0d0d;
@@ -149,10 +163,9 @@
     </style>
 </head>
 <body>
-    <!-- Back to Home Arrow -->
     <div class="container mt-3">
         <a href="/" class="btn btn-link back-to-home">
-            <i class="fas fa-arrow-left"></i> 
+            <i class="fas fa-arrow-left"></i>
         </a>
     </div>
 
@@ -198,9 +211,9 @@
         });
     </script>
     <div class="hotel-grid">
-        <!-- Dynamic Hotel List -->
         <a th:href="@{/hotels/{id}(id=${hotel.id})}" class="hotel-card" th:each="hotel : ${hotels}">
-            <img th:src="@{/images/hotel{id}.jpg(id=${hotel.id})}" th:alt="${hotel.name}">
+            <img th:if="${hotel.imageUrl}" th:src="${hotel.imageUrl}" th:alt="${hotel.name}">
+            <img th:unless="${hotel.imageUrl}" src="/images/default-hotel.jpg" th:alt="${hotel.name}">
             <div class="details">
                 <h3 th:text="${hotel.name}">Hotel Name</h3>
                 <p th:text="'Location: ' + ${hotel.location}">Location</p>
